@@ -1,15 +1,13 @@
-def check_conflicts(paths, stay_at_goal, is_edge_conflict):
+def check_conflicts(paths, is_edge_conflict):
     """
     Return the two agents ids that has a conflict.  If stay in goal is True, in order to identify the conflicts
     correctly, we need to normalize the vector since the agents will stay in the goal even the next time steps.
     :param paths: paths where check conflicts.
-    :param stay_at_goal: True if the paths has been computed with the assumption stay at goal.
     :param is_edge_conflict: if True, edge conflicts are also checked.
     :return: the first two conflicting agents.
     """
     reservation_table = dict()
-    if stay_at_goal:
-        paths = normalize_paths_lengths(paths)
+    paths = normalize_paths_lengths(paths)
 
     for ag_i, path in enumerate(paths):
         for ts, pos in enumerate(path):
@@ -29,7 +27,7 @@ def check_conflicts(paths, stay_at_goal, is_edge_conflict):
     return None
 
 
-def check_conflicts_with_type(paths, stay_at_goal, is_edge_conflict):
+def check_conflicts_with_type(paths, is_edge_conflict):
     """
     Returns a couple (type of constraint, new children constraints) or None if the state has no conflicts.
     It is used for the CBS algorithm.
@@ -39,8 +37,7 @@ def check_conflicts_with_type(paths, stay_at_goal, is_edge_conflict):
     Example: [(ai, pos_i, pos_f, ts_f), (aj, pos_i, pos_f, ts_f)]
     """
     reservation_table = dict()
-    if stay_at_goal:
-        paths = normalize_paths_lengths(paths)
+    paths = normalize_paths_lengths(paths)
 
     for ag_i, path in enumerate(paths):
         for ts, pos in enumerate(path):
@@ -60,11 +57,10 @@ def check_conflicts_with_type(paths, stay_at_goal, is_edge_conflict):
     return None
 
 
-def calculate_soc(paths, stay_at_goal, goal_occupation_time):
+def calculate_soc(paths,  goal_occupation_time):
     """
     Given the list of paths it return the sum of cost value. Time spent in goal is not considered.
     :param paths: list of paths.
-    :param stay_at_goal: True if the paths has been computed with the assumption stay at goal.
     :param goal_occupation_time: time that the agent will spent in the goal before disappear. Have sense only if stay in
     goal is false.
     :return: sum of costs value.
@@ -73,20 +69,17 @@ def calculate_soc(paths, stay_at_goal, goal_occupation_time):
         return None
 
     soc = 0
-    if stay_at_goal:
-        for path in paths:
-            soc += len(path) - 1
-    else:
-        for path in paths:
-            soc += len(path) - goal_occupation_time
+    for path in paths:
+        soc += len(path) - 1
+
     return soc
 
 
-def calculate_makespan(paths, stay_at_goal, goal_occupation_time):
+def calculate_makespan(paths, goal_occupation_time):
     """
     Given the list of paths it return the makespan value. Time spent in goal is not considered.
     :param paths: list of paths.
-    :param stay_at_goal: True if the paths has been computed with the assumption stay at goal.
+
     :param goal_occupation_time: time that the agent will spent in the goal before disappear. Have sense only if stay in
     goal is false.
     :return: makespan value.
@@ -94,10 +87,7 @@ def calculate_makespan(paths, stay_at_goal, goal_occupation_time):
     if not paths:
         return None
 
-    if stay_at_goal:
-        makespan = max([len(path)-1 for path in paths])
-    else:
-        makespan = max([len(path) for path in paths]) - goal_occupation_time
+    makespan = max([len(path)-1 for path in paths])
     return makespan
 
 

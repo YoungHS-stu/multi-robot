@@ -39,9 +39,9 @@ class CooperativeAStarSolver(AbstractSolver):
         thread.join(timeout=self._solver_settings.get_time_out())
         self._stop_event.set()
 
-        soc = calculate_soc(self._solution, self._solver_settings.stay_at_goal(),
+        soc = calculate_soc(self._solution, 
                             self._solver_settings.get_goal_occupation_time())
-        makespan = calculate_makespan(self._solution, self._solver_settings.stay_at_goal(),
+        makespan = calculate_makespan(self._solution, 
                                       self._solver_settings.get_goal_occupation_time())
 
         output_infos = self.generate_output_infos(soc, makespan, 0, 0,
@@ -84,7 +84,6 @@ class CooperativeAStarSolver(AbstractSolver):
                     self._reservation_table[pos] = []
                 self._reservation_table[pos].append(j)
                 self._reservation_table[pos].sort()
-            if self._solver_settings.stay_at_goal():
                 self._completed_pos.append(path[-1])
 
             """print("Path:", path)
@@ -94,4 +93,4 @@ class CooperativeAStarSolver(AbstractSolver):
         self._solution = paths
 
     def __str__(self):
-        return "Cooperative A* Solver using " + self._solver_settings.get_heuristic_str() + " heuristics"
+        return "Cooperative A* Solver using " + "Manhattan" + " heuristics"

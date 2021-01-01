@@ -116,17 +116,9 @@ class SingleAgentState(State):
         This function not means that the agent is already gone. It just tells if it has been completed or be in the
         time step of completion.
         """
-        if self._solver_settings.stay_at_goal():
-            return self.goal_test()
-        # else:
-        #     state = self
-        #     for i in range(self._solver_settings.get_goal_occupation_time()):
-        #         if not state.goal_test():
-        #             return False
-        #         state = state.parent()
-        #         if not state:
-        #             return False
-        #     return True
+        #if self._solver_settings.stay_at_goal():
+        return self.goal_test()
+
 
     def is_gone(self):
         """
@@ -135,17 +127,9 @@ class SingleAgentState(State):
         Is different from is_completed because an agent can be completed but he disappear the next time_step.
         Se, we have to check that he's already spent the needed time in the goal before this state.
         """
-        if self._solver_settings.stay_at_goal():
-            return False
-        else:
-            state = self
-            for i in range(self._solver_settings.get_goal_occupation_time()+1):
-                if not state.goal_test():
-                    return False
-                state = state.parent()
-                if not state:
-                    return False
-            return True
+        #if self._solver_settings.stay_at_goal():
+        return False
+
 
     def get_position(self):
         """
@@ -166,12 +150,6 @@ class SingleAgentState(State):
         path = []
         node = self
 
-        if not self._solver_settings.stay_at_goal():  # Add to the list the goal position "goal_occ_time" times.
-            counter = self._solver_settings.get_goal_occupation_time()
-            while node.goal_test() and counter > 0:
-                path.append(node._position)
-                node = node.parent()
-                counter -= 1
 
         while node.parent() is not None:  # Delete the extra states we don't need.
             if node.parent().goal_test():

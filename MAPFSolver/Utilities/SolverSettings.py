@@ -1,5 +1,4 @@
-from MAPFSolver.Heuristics.initialize_heuristic import heuristics_initializer
-
+from MAPFSolver.Heuristics.ManhattanDistanceHeuristic import ManhattanDistanceHeuristic
 
 class SolverSettings:
     """
@@ -7,7 +6,7 @@ class SolverSettings:
     initialization.
     """
 
-    def __init__(self, heuristic="Manhattan", objective_function="SOC", stay_at_goal=True, goal_occupation_time=1,
+    def __init__(self,  objective_function="SOC",  goal_occupation_time=1,
                  edge_conflict=True, time_out=None):
         """
         Initialization of the variables representing the solver settings.
@@ -21,10 +20,10 @@ class SolverSettings:
         :param time_out: max time for computing the solution. If the time is over it returns an empty solution.
         The time is expressed in seconds.
         """
-        self._heuristic_str = heuristic
+        #self._heuristic_str = "Manhattan"
         self._heuristic_obj = None
         self._objective_function = objective_function
-        self._stay_at_goal = stay_at_goal
+        self._stay_at_goal = True
         self._goal_occupation_time = goal_occupation_time
         self._edge_conflict = edge_conflict
         if time_out is not None:
@@ -39,13 +38,8 @@ class SolverSettings:
         Initialize the heuristic object which offer the compute_heuristic() method.
         :param problem_instance
         """
-        self._heuristic_obj = heuristics_initializer(self._heuristic_str, problem_instance)
+        self._heuristic_obj = ManhattanDistanceHeuristic(problem_instance)
 
-    def get_heuristic_str(self):
-        """
-        Return the heuristic used as string. ("Manhattan" or "Abstract Distance with RRA*")
-        """
-        return self._heuristic_str
 
     def get_heuristic_object(self):
         """
@@ -61,10 +55,7 @@ class SolverSettings:
         return self._objective_function
 
     def stay_at_goal(self):
-        """
-        Return True if the agents never disappear once reached the goal.
-        """
-        return self._stay_at_goal
+        return True
 
     def get_goal_occupation_time(self):
         """
@@ -98,5 +89,5 @@ class SolverSettings:
         return self._time_out
 
     def __str__(self):
-        return "Heuristics: " + self._heuristic_str + ".\tObjective function: " + str(self._objective_function) + \
+        return "Heuristics: Manhattan" +  ".\tObjective function: " + str(self._objective_function) + \
                ".\tGoal occupation time: " + str(self._goal_occupation_time)

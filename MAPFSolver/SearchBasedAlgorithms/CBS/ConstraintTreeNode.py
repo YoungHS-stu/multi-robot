@@ -93,7 +93,7 @@ class ConstraintTreeNode:
             return []
 
         if self.conflict is None:
-            conflict_type, constraints = check_conflicts_with_type(self._solution, self._solver_settings.stay_at_goal(),
+            conflict_type, constraints = check_conflicts_with_type(self._solution, 
                                                                    self._solver_settings.is_edge_conflict())
         else:
             conflict_type, constraints = self.conflict
@@ -145,10 +145,10 @@ class ConstraintTreeNode:
         :return:
         """
         if self._solver_settings.get_objective_function() == "SOC":
-            return calculate_soc(self._solution, self._solver_settings.stay_at_goal(),
+            return calculate_soc(self._solution, 
                                  self._solver_settings.get_goal_occupation_time())
         if self._solver_settings.get_objective_function() == "Makespan":
-            return calculate_makespan(self._solution, self._solver_settings.stay_at_goal(),
+            return calculate_makespan(self._solution, 
                                       self._solver_settings.get_goal_occupation_time())
 
     def total_cost(self):
@@ -176,7 +176,7 @@ class ConstraintTreeNode:
         if self._solution is None:
             return False
 
-        self.conflict = check_conflicts_with_type(self._solution, self._solver_settings.stay_at_goal(),
+        self.conflict = check_conflicts_with_type(self._solution, 
                                                   self._solver_settings.is_edge_conflict())
 
         if self.conflict is None:

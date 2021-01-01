@@ -43,17 +43,12 @@ ALGORITHMS_MODES = [
     ("M*", "M*"),
     ("Cooperative A*", "Cooperative A*"),
     ("Conflict Based Search", "Conflict Based Search"),
-    ("Increasing Cost Tree Search", "Increasing Cost Tree Search"),
 ]
 
 COLORS_LIST =["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#00FFFF", "#FF00FF", "#C0C0C0", "#800000",
               "#808000", "#008000", "#800080", "#008080", "#000080", "#FF7F50", "#FF8C00", "#9ACD32", "#FFC0CB",
               "#F5DEB3", "#D2691E"]
 
-HEURISTICS_MODES = [
-    ("Manhattan Distance", "Manhattan"),
-    ("Abstract Distance with RRA*", "AbstractDistance")
-]
 
 OBJECTIVE_FUNCTION_MODES = [
     ("Sum the costs", "SOC"),

@@ -106,8 +106,7 @@ class Reader:
                 idx = values.index(next_bucket_number)
                 self._scenario_instances = self._scenario_instances[idx:] + self._scenario_instances[:idx - 1]
 
-            elif self._scenario_type == "random":
-                np.random.shuffle(self._scenario_instances)
+
 
             self._change_scenario_instances = False
 

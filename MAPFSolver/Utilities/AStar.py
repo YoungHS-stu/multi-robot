@@ -39,9 +39,9 @@ class AStar:
             if cur_state.goal_test():
                 path = cur_state.get_path_to_root()
                 goal = cur_state.get_position()
-                if not self._solver_settings.stay_at_goal():
-                    for i in range(self._solver_settings.get_goal_occupation_time()-1):
-                        path.append(goal)
+                # if not self._solver_settings.stay_at_goal():
+                #     for i in range(self._solver_settings.get_goal_occupation_time()-1):
+                #         path.append(goal)
                 return path
 
             if cur_state.get_position() not in self._closed_list_of_positions:
@@ -89,27 +89,27 @@ class AStar:
                     # If the position is already occupied.
                     conflict_with_other_agent = state.time_step() in busy_times
 
-                    if self._solver_settings.stay_at_goal():
-                        # If True means that the position is busy due to an agent that occupy his goal forever.
-                        conflict_with_goal = state.get_position() in completed_pos and \
-                                             state.time_step() >= busy_times[len(busy_times) - 1]
+                    #if self._solver_settings.stay_at_goal():
+                    # If True means that the position is busy due to an agent that occupy his goal forever.
+                    conflict_with_goal = state.get_position() in completed_pos and \
+                                            state.time_step() >= busy_times[len(busy_times) - 1]
 
-                        # If True means exists another agent already planned that will pass on this position in future.
-                        """print("----------------------------------------")
-                        if state.goal_test():
-                            print("state.goal_test()")
-                        if not (len(busy_times) == 0):
-                            print("not (len(busy_times) == 0)")
-                        if any(y < state.time_step() for y in busy_times):
-                            print("any(y < state.time_step() for y in busy_times)")"""
-                        block_previous_agents_when_in_goal = state.goal_test() and not (len(busy_times) == 0) and \
-                                                             any(y > state.time_step() for y in busy_times)
+                    # If True means exists another agent already planned that will pass on this position in future.
+                    """print("----------------------------------------")
+                    if state.goal_test():
+                        print("state.goal_test()")
+                    if not (len(busy_times) == 0):
+                        print("not (len(busy_times) == 0)")
+                    if any(y < state.time_step() for y in busy_times):
+                        print("any(y < state.time_step() for y in busy_times)")"""
+                    block_previous_agents_when_in_goal = state.goal_test() and not (len(busy_times) == 0) and \
+                                                            any(y > state.time_step() for y in busy_times)
 
-                        """if block_previous_agents_when_in_goal:
-                            print("block previous when in goal", state.get_position(), state.time_step())"""
+                    """if block_previous_agents_when_in_goal:
+                        print("block previous when in goal", state.get_position(), state.time_step())"""
 
-                        conflict_with_other_agent = conflict_with_other_agent or conflict_with_goal or \
-                                                    block_previous_agents_when_in_goal
+                    conflict_with_other_agent = conflict_with_other_agent or conflict_with_goal or \
+                                                block_previous_agents_when_in_goal
 
                     if not conflict_with_other_agent:
                         if self._solver_settings.is_edge_conflict():
@@ -154,7 +154,8 @@ class AStar:
                     if (state.get_position(), state.time_step()) not in vertex_constraints:
                         if (state.parent().get_position(), state.get_position(), state.time_step()) not in \
                                 edge_constraints or edge_constraints is None:
-                            if self._solver_settings.stay_at_goal() and state.goal_test():
+                            #if self._solver_settings.stay_at_goal() and state.goal_test():
+                            if state.goal_test():
                                 temp_bool = True
                                 for pos, ts in vertex_constraints:
                                     if pos == state.get_position() and ts > state.time_step():

@@ -11,9 +11,7 @@ def get_solver(algorithm_str, solver_settings):
     if algorithm_str == "A*":
         from MAPFSolver.SearchBasedAlgorithms.AStar.AStarSolver import AStarSolver
         return AStarSolver(solver_settings)
-    if algorithm_str == "Increasing Cost Tree Search":
-        from MAPFSolver.SearchBasedAlgorithms.ICTS.ICTSSolver import ICTSSolver
-        return ICTSSolver(solver_settings)
+
     if algorithm_str == "Conflict Based Search":
         from MAPFSolver.SearchBasedAlgorithms.CBS.CBSSolver import CBSSolver
         return CBSSolver(solver_settings)
@@ -23,7 +21,7 @@ def get_solver(algorithm_str, solver_settings):
     raise ValueError('Algorithm string not exists!')
 
 
-def prepare_simulation(reader, frame, algorithm_str, independence_detection, solver_settings, n_of_agents):
+def prepare_simulation(reader, frame, algorithm_str,  solver_settings, n_of_agents):
     """
     Solve the MAPF problem and visualize the simulation on the frame.
     :param reader: Reader object for the loading of the map and the scen
@@ -33,14 +31,12 @@ def prepare_simulation(reader, frame, algorithm_str, independence_detection, sol
     :param solver_settings: Settings of the solver (heuristics, goal_occupation_time)
     :param n_of_agents: Number of Agents on the map
     """
-    x = 1
+
     problem_map = load_map(reader)
     agents = load_agents(reader, problem_map, n_of_agents)
     problem_instance = ProblemInstance(problem_map, agents)
 
-    # if independence_detection:
-    #     solver = IDFramework(algorithm_str, solver_settings)
-    # else:
+
     solver = get_solver(algorithm_str, solver_settings)
     print("Solver --> ", solver, "\nSolving...")
     paths, output_infos = solver.solve(problem_instance, verbose=True, return_infos=True)

@@ -35,7 +35,6 @@ class StartMenu:
         self.buttons_list = []
         self.goal_occupation_time_down_button = None
         self.goal_occupation_time_up_button = None
-        self.stay_at_goal_button = None
         self.reader = Reader()
 
         # GUIdd selectable variables
@@ -47,11 +46,9 @@ class StartMenu:
         self.selected_objective_function_var = StringVar()
         self.selected_goal_occupation_time = IntVar()
         self.selected_n_of_agents = IntVar()
-        self.selected_scene_type = StringVar()
         self.selected_scene_number = IntVar()
         self.selected_change_scene_instances_button_text = StringVar()
         self.edge_conflicts_var = BooleanVar()
-        self.stay_at_goal_var = BooleanVar()
         self.time_out_var = IntVar()
 
         self.initialize_variables()
@@ -107,11 +104,10 @@ class StartMenu:
         self.selected_objective_function_var.set("SOC")
         self.selected_goal_occupation_time.set(1)
         self.selected_n_of_agents.set(5)
-        self.selected_scene_type.set("Even")
         self.selected_scene_number.set(1)
         self.selected_change_scene_instances_button_text.set("NEXT SCENE")
         self.edge_conflicts_var.set(True)
-        self.stay_at_goal_var.set(True)
+
         self.time_out_var.set(0)
         self.waiting_var.set("")
 
@@ -183,13 +179,9 @@ class StartMenu:
         lbl_title = Label(self.algorithm_settings_frame, text="HEURISTICS", font=self.font_titles, fg=self.color_titles)
         lbl_title.pack(anchor=W, pady=self.pady_titles)
 
-        # Heuristics Radiobuttons
-        for text, mode in HEURISTICS_MODES:
-            b = Radiobutton(self.algorithm_settings_frame, text=text, variable=self.selected_heuristic_var,
-                            borderwidth=0, value=mode)
-            self.buttons_list.append(b)
+        heuristic_label = Label(self.algorithm_settings_frame,text="Manhattan Distance")
+        heuristic_label.pack(anchor=W)
 
-            b.pack(anchor=W)
 
         # Objective Function Label
         lbl_title = Label(self.algorithm_settings_frame, text="OBJECTIVE FUNCTION", font=self.font_titles, fg=self.color_titles)
@@ -251,8 +243,6 @@ class StartMenu:
     def fun(self):
         print(self.time_out_var.get())
 
-
-
     def initialize_scene_selection_canvas(self, canvas):
         """
         Initialize the Scene Selection Canvas
@@ -260,8 +250,6 @@ class StartMenu:
         # Load button images
         root_path = pathlib.Path(__file__).parent
 
-        arrow_right_img = self.load_image(root_path / "Images/arrow_right.png", (20, 20))
-        arrow_left_img = self.load_image(root_path / "Images/arrow_left.png", (20, 20))
         arrow_up_img = self.load_image(root_path / "Images/arrow_up.png", (20, 20))
         arrow_down_img = self.load_image(root_path / "Images/arrow_down.png", (20, 20))
 
@@ -338,13 +326,13 @@ class StartMenu:
         self.disable_settings_buttons()
 
         # Create an instance of the class SolverSettings
-        solver_settings = SolverSettings(self.selected_heuristic_var.get(), self.selected_objective_function_var.get(),
-                                         self.stay_at_goal_var.get(), self.selected_goal_occupation_time.get(),
+        solver_settings = SolverSettings(self.selected_objective_function_var.get(),
+                                         self.selected_goal_occupation_time.get(),
                                          self.edge_conflicts_var.get(), self.time_out_var.get())
 
         # Prepare to show the simulation on the given frame
         prepare_simulation(self.reader, self.simulation_frame, self.selected_algorithm_var.get(),
-                           False, solver_settings, self.selected_n_of_agents.get())
+                           solver_settings, self.selected_n_of_agents.get())
 
         # Enable all the Buttons
         try:
