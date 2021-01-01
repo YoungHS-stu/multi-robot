@@ -62,32 +62,6 @@ class MStarState(MultiAgentState):
 
         return expanded_states
 
-    def set_back_propagation_set(self, back_set):
-        """
-        Set the back propagation set with the back_set inserted.
-        :param back_set: new back propagation set.
-        """
-        self._back_propagation_set = back_set
-
-    def get_back_propagation_set(self):
-        """
-        Returns the back propagation set of this state.
-        """
-        return self._back_propagation_set
-
-    def set_collisions_set(self, collisions_set):
-        """
-        Set the collisions set with the collisions_set inserted.
-        :param collisions_set: new collisions set.
-        """
-        self._collisions_set = collisions_set
-
-    def get_collisions_set(self):
-        """
-        Returns the collision set of this state.
-        """
-        return self._collisions_set
-
     def equal_position(self, other):
         """
         Return True if the multi agent state and the given multi agent state has the same positions for all the single
@@ -125,6 +99,18 @@ class MStarState(MultiAgentState):
             if not single_state.equal(other.get_single_agent_states()[i]):
                 return False
         return True
+
+    def set_back_propagation_set(self, back_set):
+        self._back_propagation_set = back_set
+
+    def get_back_propagation_set(self):
+        return self._back_propagation_set
+
+    def set_collisions_set(self, collisions_set):
+        self._collisions_set = collisions_set
+
+    def get_collisions_set(self):
+        return self._collisions_set
 
     def __str__(self):
         string = '[F:' + str(self.f_value()) + ' G: ' + str(self.g_value()) + ' TS:' + str(self.time_step()) + ' '

@@ -3,16 +3,19 @@
   <component name="ChangeListManager">
     <list default="true" id="32324798-5954-4525-8212-15aa3a4fa68f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../../GUI/Visualize.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../GUI/Visualize.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../GUI/macros.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../GUI/macros.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../GUI/start_simulation.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../MAPFSolver/SearchBasedAlgorithms/AStar/MultiAgentState.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../MAPFSolver/SearchBasedAlgorithms/AStar/MultiAgentState.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../MAPFSolver/SearchBasedAlgorithms/AStar/AStarSolver.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../MAPFSolver/SearchBasedAlgorithms/AStar/AStarSolver.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../MAPFSolver/SearchBasedAlgorithms/CBS/CBSSolver.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../MAPFSolver/SearchBasedAlgorithms/CBS/CBSSolver.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../MAPFSolver/SearchBasedAlgorithms/CBS/ConstraintTreeNode.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../MAPFSolver/SearchBasedAlgorithms/CBS/ConstraintTreeNode.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../MAPFSolver/SearchBasedAlgorithms/IDFramework.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../MAPFSolver/Utilities/AStar.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../MAPFSolver/Utilities/AStar.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../MAPFSolver/Utilities/Reader.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../MAPFSolver/Utilities/Reader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../MAPFSolver/SearchBasedAlgorithms/CBS/ConstraintTreeNodesQueue.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../MAPFSolver/SearchBasedAlgorithms/CBS/ConstraintTreeNodesQueue.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../MAPFSolver/SearchBasedAlgorithms/CooperativeAStar/CooperativeAStarSolver.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../MAPFSolver/SearchBasedAlgorithms/CooperativeAStar/CooperativeAStarSolver.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../MAPFSolver/SearchBasedAlgorithms/MStar/MStarSolver.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../MAPFSolver/SearchBasedAlgorithms/MStar/MStarSolver.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../MAPFSolver/SearchBasedAlgorithms/MStar/MStarState.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../MAPFSolver/SearchBasedAlgorithms/MStar/MStarState.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../MAPFSolver/SearchBasedAlgorithms/MStar/MStarStatesQueue.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../MAPFSolver/SearchBasedAlgorithms/MStar/MStarStatesQueue.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../MAPFSolver/Utilities/AbstractSolver.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../MAPFSolver/Utilities/AbstractSolver.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../MAPFSolver/Utilities/SingleAgentState.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../MAPFSolver/Utilities/SingleAgentState.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../MAPFSolver/Utilities/SolverSettings.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../MAPFSolver/Utilities/SolverSettings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../MAPFSolver/Utilities/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../MAPFSolver/Utilities/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../MAPFSolver/Utilities/paths_processing.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../MAPFSolver/Utilities/paths_processing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../MAPFSolver/Utilities/paths_processing.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -67,7 +70,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="33" width="1721" height="935" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />

@@ -1,4 +1,3 @@
-from MAPFSolver.Utilities.paths_processing import calculate_soc, calculate_makespan
 from MAPFSolver.Utilities.SingleAgentState import SingleAgentState
 from MAPFSolver.Utilities.AbstractSolver import AbstractSolver
 from MAPFSolver.Utilities.StatesQueue import StatesQueue
@@ -44,15 +43,12 @@ class AStarSolver(AbstractSolver):
         self._stop_event.set()
 
         if not self._solution:
-            output_infos = self.generate_output_infos(None, None, self._n_of_generated_nodes, self._n_of_expanded_nodes,
+            output_infos = self.generate_output_infos(self._n_of_generated_nodes, self._n_of_expanded_nodes,
                                                       time.time() - start)
         else:
-            soc = calculate_soc(self._solution, 
-                                self._solver_settings.get_goal_occupation_time())
-            makespan = calculate_makespan(self._solution, 
-                                          self._solver_settings.get_goal_occupation_time())
 
-            output_infos = self.generate_output_infos(soc, makespan, self._n_of_generated_nodes,
+
+            output_infos = self.generate_output_infos(self._n_of_generated_nodes,
                                                       self._n_of_expanded_nodes, time.time() - start)
         if verbose:
             print("Problem ended: ", output_infos)
@@ -89,27 +85,7 @@ class AStarSolver(AbstractSolver):
                 self._n_of_generated_nodes += len(expanded_nodes)
                 self._n_of_expanded_nodes += 1
                 self._frontier.extend(expanded_nodes)
-            # if not self._solver_settings.stay_at_goal():
-            #     # In case agents disappear at goals we cannot delete duplicates since can happen that an agent wait that
-            #     # another agent disappear in order to pass from that position. And this waiting is important in this
-            #     # case since some agents is spending its required time in the goal.
-            #     bool_test = False
-            #     for single_agent_state in cur_state.get_single_agent_states():
-            #         if single_agent_state.goal_test() and not single_agent_state.is_gone():
-            #             bool_test = True
-            #
-            #     if not self._closed_list.contains_state_same_positions(cur_state) or \
-            #             (bool_test and not self._closed_list.contains_state(cur_state)):
-            #         self._closed_list.add(cur_state)
-            #         expanded_nodes = cur_state.expand(verbose=verbose)
-            #         self._n_of_generated_nodes += len(expanded_nodes)
-            #         self._n_of_expanded_nodes += 1
-            #         self._frontier.extend(expanded_nodes)
-            #
-            # else:
-
-
-
+       
 
     def initialize_problem(self, problem_instance):
         """

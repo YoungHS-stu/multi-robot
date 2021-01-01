@@ -3,9 +3,6 @@ class MStarStatesQueue:
     Structure used as queue of states.
     """
     def __init__(self):
-        """
-        Initialize a new queue.
-        """
         self._queue = []
 
     def get_node(self, item):
@@ -52,32 +49,6 @@ class MStarStatesQueue:
                 return True
         return False
 
-    def add(self, item):
-        """
-        Add an item state to the queue.
-        :param item: state to add.
-        """
-        self._queue.append(item)
-
-    def add_list_of_states(self, state_list):
-        """
-        Add a list of states to the queue.
-        :param state_list: state list to add.
-        """
-        self._queue.extend(state_list)
-
-    def pop(self):
-        """
-        Pop the first element of the Queue and return it.
-        """
-        return self._queue.pop(0)
-
-    def is_empty(self):
-        """
-        Return True if the queue is empty.
-        """
-        return len(self._queue) == 0
-
     def get_state_by_position(self, position):
         """
         Return the state, if exists, that has the same given position.
@@ -106,6 +77,18 @@ class MStarStatesQueue:
         Sort the queue by the f-value. Sorting also on the h-value as second index it speed up the process.
         """
         self._queue.sort(key=lambda x: (x.f_value(), x.h_value()), reverse=False)
+
+    def add(self, item):
+        self._queue.append(item)
+
+    def add_list_of_states(self, state_list):
+        self._queue.extend(state_list)
+
+    def pop(self):
+        return self._queue.pop(0)
+
+    def is_empty(self):
+        return len(self._queue) == 0
 
     def __str__(self):
         string = ''

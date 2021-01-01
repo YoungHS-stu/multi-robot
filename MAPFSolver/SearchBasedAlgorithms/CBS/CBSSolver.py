@@ -1,7 +1,6 @@
 from MAPFSolver.Utilities.AbstractSolver import AbstractSolver
 from MAPFSolver.SearchBasedAlgorithms.CBS.ConstraintTreeNode import ConstraintTreeNode
 from MAPFSolver.SearchBasedAlgorithms.CBS.ConstraintTreeNodesQueue import ConstraintTreeNodesQueue
-from MAPFSolver.Utilities.paths_processing import calculate_soc, calculate_makespan
 from threading import Thread, Event
 
 import time
@@ -45,12 +44,9 @@ class CBSSolver(AbstractSolver):
         thread.join(timeout=self._solver_settings.get_time_out())
         self._stop_event.set()
 
-        soc = calculate_soc(self._solution,
-                            self._solver_settings.get_goal_occupation_time())
-        makespan = calculate_makespan(self._solution,
-                                      self._solver_settings.get_goal_occupation_time())
 
-        output_infos = self.generate_output_infos(soc, makespan, self._n_of_generated_nodes, self._n_of_expanded_nodes,
+
+        output_infos = self.generate_output_infos(self._n_of_generated_nodes, self._n_of_expanded_nodes,
                                                   time.time() - start)
         if verbose:
             print("Problem ended: ", output_infos)

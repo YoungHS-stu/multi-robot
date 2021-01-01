@@ -135,8 +135,7 @@ class Visualize:
         """
         Set the text inside the infos with the output infos.
         """
-        self.infos_txt_var.set("SUM OF COSTS: " + str(self._output_infos["sum_of_costs"]) + "\nMAKESPAN: " +
-                               str(self._output_infos["makespan"]) + "\nN° OF GENERATED NODES: " +
+        self.infos_txt_var.set("N° OF GENERATED NODES: " +
                                str(self._output_infos["generated_nodes"]) + "\nN° OF EXPANDED NODES: " +
                                str(self._output_infos["expanded_nodes"]) + "\nCOMPUTATIONAL TIME: " +
                                str(round(self._output_infos["computation_time"], 4)))

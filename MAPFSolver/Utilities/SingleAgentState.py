@@ -101,9 +101,6 @@ class SingleAgentState(State):
                     break
 
     def goal_test(self):
-        """
-        Return True if the agent is on the goal position.
-        """
         return self._position == self._goal
 
     def is_completed(self):
@@ -130,11 +127,7 @@ class SingleAgentState(State):
         #if self._solver_settings.stay_at_goal():
         return False
 
-
     def get_position(self):
-        """
-        Return the state position.
-        """
         return self._position
 
     def get_positions_list(self):

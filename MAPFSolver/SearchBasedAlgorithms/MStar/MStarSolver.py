@@ -2,7 +2,6 @@ from MAPFSolver.SearchBasedAlgorithms.MStar.MStarStatesQueue import MStarStatesQ
 from MAPFSolver.Utilities.AbstractSolver import AbstractSolver
 from MAPFSolver.Utilities.SingleAgentState import SingleAgentState
 from MAPFSolver.Utilities.StatesQueue import StatesQueue
-from MAPFSolver.Utilities.paths_processing import calculate_soc, calculate_makespan
 from MAPFSolver.SearchBasedAlgorithms.MStar.MStarState import MStarState
 from threading import Thread, Event
 import time
@@ -55,12 +54,7 @@ class MStarSolver(AbstractSolver):
         thread.join(timeout=self._solver_settings.get_time_out())
         self._stop_event.set()
 
-        soc = calculate_soc(self._solution, 
-                            self._solver_settings.get_goal_occupation_time())
-        makespan = calculate_makespan(self._solution, 
-                                      self._solver_settings.get_goal_occupation_time())
-
-        output_infos = self.generate_output_infos(soc, makespan, self._n_of_generated_nodes, self._n_of_expanded_nodes,
+        output_infos = self.generate_output_infos( self._n_of_generated_nodes, self._n_of_expanded_nodes,
                                                   time.time() - start)
         if verbose:
             print("Problem ended: ", output_infos)

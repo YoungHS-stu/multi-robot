@@ -24,7 +24,6 @@ class SolverSettings:
         self._objective_function = objective_function
         self._stay_at_goal = True
         self._goal_occupation_time = goal_occupation_time
-        self._edge_conflict = edge_conflict
         if time_out is not None:
             self._time_out = time_out if time_out > 0 else None
         else:

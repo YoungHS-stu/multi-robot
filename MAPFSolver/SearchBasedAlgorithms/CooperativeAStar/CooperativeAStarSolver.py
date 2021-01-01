@@ -1,4 +1,3 @@
-from MAPFSolver.Utilities.paths_processing import calculate_soc, calculate_makespan
 from MAPFSolver.Utilities.AbstractSolver import AbstractSolver
 from MAPFSolver.Utilities.AStar import AStar
 from threading import Thread, Event
@@ -38,13 +37,7 @@ class CooperativeAStarSolver(AbstractSolver):
         thread.join(timeout=self._solver_settings.get_time_out())
         self._stop_event.set()
 
-        soc = calculate_soc(self._solution, 
-                            self._solver_settings.get_goal_occupation_time())
-        makespan = calculate_makespan(self._solution, 
-                                      self._solver_settings.get_goal_occupation_time())
-
-        output_infos = self.generate_output_infos(soc, makespan, 0, 0,
-                                                  time.time() - start)
+        output_infos = self.generate_output_infos(0, 0, time.time() - start)
         if verbose:
             print("Problem ended: ", output_infos)
 
@@ -61,7 +54,6 @@ class CooperativeAStarSolver(AbstractSolver):
 
         paths = []
         for i, agent in enumerate(problem_instance.get_agents()):
-
             if self._stop_event.is_set():
                 break
 
