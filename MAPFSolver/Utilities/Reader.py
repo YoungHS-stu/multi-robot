@@ -25,7 +25,7 @@ class Reader:
     called before calling the corresponding load_map_file() or load_scenario_file().
     """
 
-    def __init__(self, map_number=0, scenario_type="even", scenario_file_number=1):
+    def __init__(self, map_number=0, scenario_file_number=1):
         """
         Initialize a reader object.
         :param map_number: map number to load.
@@ -33,11 +33,10 @@ class Reader:
         :param scenario_file_number: scenario file number to load.
         """
         self._map_number = map_number
-        self._scenario_type = scenario_type
         self._scenario_file_number = scenario_file_number
 
         self._reload_instances = True  # If False it loads scenario instances already loaded
-        self._change_scenario_instances = False
+        #self._change_scenario_instances = False
 
         self._scenario_instances = None
 
@@ -91,24 +90,13 @@ class Reader:
         :param n_of_agents: number of agents to return.
         :return: array of start and destination couples. (Agents starts and goals)
         """
-        scenario_file_path = get_scenario_file_path(self._map_number, self._scenario_type, self._scenario_file_number)
+        scenario_file_path = get_scenario_file_path(self._map_number,  self._scenario_file_number)
 
         if self._reload_instances:
             self.load_instances(scenario_file_path, map_width, map_height)
             self._reload_instances = False
 
-        if self._change_scenario_instances:
-            if self._scenario_type == "even":
-                current_bucket = self._scenario_instances[0][0]
-                values = [x[0] for x in self._scenario_instances]
-                max_bucket = max(values)
-                next_bucket_number = 0 if current_bucket == max_bucket else current_bucket+1
-                idx = values.index(next_bucket_number)
-                self._scenario_instances = self._scenario_instances[idx:] + self._scenario_instances[:idx - 1]
 
-
-
-            self._change_scenario_instances = False
 
         instances = [((i[4], i[5]), (i[6], i[7])) for i in self._scenario_instances]
         for start, goal in instances:
@@ -118,12 +106,6 @@ class Reader:
         print("INSTANCES: ", instances[:n_of_agents])
         return instances[:n_of_agents]
 
-    def change_scenario_instances(self):
-        """
-        Call this method every time I want to change the agent selected in the scenario file. It will set the corresponding
-        variable to True in order to load a different bucket when the scenario file is loaded.
-        """
-        self._change_scenario_instances = True
 
     def load_instances(self, scenario_file_path, map_width, map_height):
         """
@@ -156,13 +138,7 @@ class Reader:
         self._map_number = map_number
         self._reload_instances = True
 
-    def set_scenario_type(self, scenario_type):
-        """
-        Set the scenario type to load.
-        :param scenario_type:
-        """
-        self._scenario_type = scenario_type
-        self._reload_instances = True
+
 
     def set_scenario_file_number(self, scenario_file_number):
         """
@@ -190,7 +166,7 @@ def convert_nums(lst):
     return lst
 
 
-def get_scenario_file_path(map_number, scenario_type, scenario_number):
+def get_scenario_file_path(map_number,  scenario_number):
     """
     Given the number of the map, the type and the number of the scenario, it returns the path of the .scen file.
     :param map_number: number of the chosen map.
@@ -200,7 +176,7 @@ def get_scenario_file_path(map_number, scenario_type, scenario_number):
     """
     map_name = MAPS_NAMES_LIST.get(map_number)
     root_path = pathlib.Path(__file__).parent.parent.parent
-    scenario_file_path = str(root_path / "Maps/scenarios-") + scenario_type + "/" + map_name + "-" + scenario_type + "-" + str(
+    scenario_file_path = str(root_path / "Maps/scenarios-") + "even" + "/" + map_name + "-" + "even" + "-" + str(
         scenario_number) + ".scen"
     return scenario_file_path
 

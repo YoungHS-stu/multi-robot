@@ -1,12 +1,93 @@
 import pathlib
-
+from .Visualize import Visualize
+from MAPFSolver import *
 from MAPFSolver.Utilities.SolverSettings import SolverSettings
 from MAPFSolver.Utilities.Reader import Reader, MAPS_NAMES_LIST
-from GUI.start_simulation import prepare_simulation
+#from GUI.start_simulation import prepare_simulation
 from GUI.macros import *
 from tkinter import *
 from PIL import Image, ImageTk
-import platform
+
+def load_map(reader):
+    """
+    Return the map object given the number of the chosen map.
+    :param reader: Reader object.
+    :return: a Map object.
+    """
+    from MAPFSolver.Utilities.Map import Map
+
+    print("Loading map...")
+    map_width, map_height, occupancy_list = reader.load_map_file()
+    print("Map loaded.")
+
+    return Map(map_height, map_width, occupancy_list)
+
+
+def load_agents(reader, problem_map, n_of_agents):
+    """
+    Return the Agent list for the specified scene number of the given map and the selected number of agents.
+    """
+    from MAPFSolver.Utilities.Agent import Agent
+
+    print("Loading scenario file...")
+    agents = reader.load_scenario_file(problem_map.get_obstacles_xy(), problem_map.get_width(),
+                                       problem_map.get_height(), n_of_agents=n_of_agents)
+    print("Scenario loaded.")
+    return [Agent(i, a[0], a[1]) for i, a in enumerate(agents)]
+
+def get_solver(algorithm_str, solver_settings):
+    """
+    Return the Solver object for the specified algorithm and relative settings.
+    """
+    if algorithm_str == "Cooperative A*":
+        from MAPFSolver.SearchBasedAlgorithms.CooperativeAStar.CooperativeAStarSolver import CooperativeAStarSolver
+        return CooperativeAStarSolver(solver_settings)
+    if algorithm_str == "A*":
+        from MAPFSolver.SearchBasedAlgorithms.AStar.AStarSolver import AStarSolver
+        return AStarSolver(solver_settings)
+
+    if algorithm_str == "Conflict Based Search":
+        from MAPFSolver.SearchBasedAlgorithms.CBS.CBSSolver import CBSSolver
+        return CBSSolver(solver_settings)
+    if algorithm_str == "M*":
+        from MAPFSolver.SearchBasedAlgorithms.MStar.MStarSolver import MStarSolver
+        return MStarSolver(solver_settings)
+    raise ValueError('Algorithm string not exists!')
+
+
+def prepare_simulation(reader, frame, algorithm_str,  solver_settings, n_of_agents):
+
+    problem_map = load_map(reader)
+    agents = load_agents(reader, problem_map, n_of_agents)
+    problem_instance = ProblemInstance(problem_map, agents)
+
+
+    solver = get_solver(algorithm_str, solver_settings)
+    print("Solver --> ", solver, "\nSolving...")
+    paths, output_infos = solver.solve(problem_instance, verbose=True, return_infos=True)
+    print("Solved.")
+
+    plot_on_gui(problem_instance,  frame, paths, output_infos)
+
+
+def plot_on_gui(problem_instance,  frame, paths=None, output_infos=None):
+    """
+    Plot the result on GUIdd.
+    :param problem_instance: instance of the problem.
+    :param solver_settings: settings of the solver.
+    :param frame: tkinter frame where display the result.
+    :param paths: resulting paths.
+    :param output_infos: problem solving results.
+    """
+    print("In plot_on_gui   ")
+    print("problem_instance ", problem_instance)
+    print("frame            ", frame)
+    print("paths            ", paths)
+    print("output_infos     ", output_infos)
+
+    window = Visualize(problem_instance, frame, paths, output_infos)
+    window.initialize_window()
+
 
 
 class StartMenu:
@@ -47,7 +128,6 @@ class StartMenu:
         self.selected_goal_occupation_time = IntVar()
         self.selected_n_of_agents = IntVar()
         self.selected_scene_number = IntVar()
-        self.selected_change_scene_instances_button_text = StringVar()
         self.edge_conflicts_var = BooleanVar()
         self.time_out_var = IntVar()
 
@@ -105,7 +185,6 @@ class StartMenu:
         self.selected_goal_occupation_time.set(1)
         self.selected_n_of_agents.set(5)
         self.selected_scene_number.set(1)
-        self.selected_change_scene_instances_button_text.set("NEXT SCENE")
         self.edge_conflicts_var.set(True)
 
         self.time_out_var.set(0)
@@ -207,7 +286,7 @@ class StartMenu:
         self.initialize_scene_selection_canvas(scene_selection_canvas)
 
         # Number of Agents Label
-        lbl_title = Label(self.algorithm_settings_frame, text="NUMBER OF AGENTS / INSTANCES CHOICE",
+        lbl_title = Label(self.algorithm_settings_frame, text="NUMBER OF AGENTS",
                           font=self.font_titles, fg=self.color_titles)
         lbl_title.pack(anchor=W, pady=self.pady_titles)
 
@@ -294,11 +373,6 @@ class StartMenu:
         self.buttons_list.append(n_of_agents_up_button)
         n_of_agents_up_button.pack(side=LEFT, padx=(15, 20))
 
-        # Shuffle Button
-        change_scene_instances_button = Button(canvas, textvariable=self.selected_change_scene_instances_button_text,
-                                               command=self.change_scene_instances)
-        self.buttons_list.append(change_scene_instances_button)
-        change_scene_instances_button.pack(side=LEFT, padx=(50, 0))
 
     def initialize_time_out_canvas(self, canvas):
         """
@@ -341,54 +415,30 @@ class StartMenu:
         except TclError:
             exit(-1)
 
-    def change_scene_instances(self):
-        """
-        Shuffle the scene instances (shuffle the agent choice)
-        """
-        self.reader.change_scenario_instances()
-
 
     def scene_file_number_down_button(self):
-        """
-        Button function to decrement the scene file number
-        """
         if self.selected_scene_number.get() > 1:
             self.selected_scene_number.set(self.selected_scene_number.get()-1)
             self.reader.set_scenario_file_number(self.selected_scene_number.get())
 
     def scene_file_number_up_button(self):
-        """
-         Button function to increment the scene file number
-         """
-        if self.selected_scene_number.get() < 25:
+        if self.selected_scene_number.get() < 5:
             self.selected_scene_number.set(self.selected_scene_number.get()+1)
             self.reader.set_scenario_file_number(self.selected_scene_number.get())
 
     def n_of_agents_down_button(self):
-        """
-        Button function to decrement the number of agents
-        """
         if self.selected_n_of_agents.get() > 1:
             self.selected_n_of_agents.set(self.selected_n_of_agents.get()-1)
 
     def n_of_agents_up_button(self):
-        """
-         Button function to increment the number of agents
-         """
         self.selected_n_of_agents.set(self.selected_n_of_agents.get()+1)
 
     def enable_settings_buttons(self):
-        """
-        # Enable all the Buttons
-        """
         for radio_button in self.buttons_list:
             radio_button.configure(state=NORMAL)
 
 
     def disable_settings_buttons(self):
-        """
-        Disable all the Buttons
-        """
         for button in self.buttons_list:
             button.configure(state=DISABLED)
 
@@ -407,3 +457,5 @@ class StartMenu:
 
     def do_loop(self):
         self.frame.mainloop()
+
+

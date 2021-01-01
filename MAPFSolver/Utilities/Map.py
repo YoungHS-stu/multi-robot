@@ -1,8 +1,4 @@
 class Map:
-    """
-    This class represents a map.
-    """
-
     def __init__(self, h, w, obstacles):
         """
         Initialize a map with his dimensions and the list of the obstacles.
@@ -23,7 +19,6 @@ class Map:
         """
         x, y = xy
         neighbours = []
-
         if x > 0 and not (x-1, y) in self._obstacles_xy:
             neighbours.append((x-1, y))
         if x < self._w-1 and not (x+1, y) in self._obstacles_xy:
@@ -36,29 +31,15 @@ class Map:
         return neighbours
 
     def get_height(self):
-        """
-        Returns the height of the map.
-        """
         return self._h
 
     def get_width(self):
-        """
-        Returns the width of the map.
-        """
         return self._w
 
     def get_obstacles_xy(self):
-        """
-        Return the list of obstacles positions.
-        """
         return self._obstacles_xy
 
     def is_obstacle(self, pos):
-        """
-        Return True if in the position pos=(x,y) there's an obstacle.
-        :param pos: position (x, y) that I want to analyze.
-        :return: True if in the inserted position the is an obstacle.
-        """
         return pos in self._obstacles_xy
 
     def __str__(self):

@@ -64,9 +64,6 @@ class ProblemInstance:
         return False
 
     def get_map(self):
-        """
-        Return the problem Map.
-        """
         return self._map
 
     def get_agents(self):

@@ -1,6 +1,34 @@
 from .Visualize import Visualize
 from MAPFSolver import *
 
+
+def load_map(reader):
+    """
+    Return the map object given the number of the chosen map.
+    :param reader: Reader object.
+    :return: a Map object.
+    """
+    from MAPFSolver.Utilities.Map import Map
+
+    print("Loading map...")
+    map_width, map_height, occupancy_list = reader.load_map_file()
+    print("Map loaded.")
+
+    return Map(map_height, map_width, occupancy_list)
+
+
+def load_agents(reader, problem_map, n_of_agents):
+    """
+    Return the Agent list for the specified scene number of the given map and the selected number of agents.
+    """
+    from MAPFSolver.Utilities.Agent import Agent
+
+    print("Loading scenario file...")
+    agents = reader.load_scenario_file(problem_map.get_obstacles_xy(), problem_map.get_width(),
+                                       problem_map.get_height(), n_of_agents=n_of_agents)
+    print("Scenario loaded.")
+    return [Agent(i, a[0], a[1]) for i, a in enumerate(agents)]
+
 def get_solver(algorithm_str, solver_settings):
     """
     Return the Solver object for the specified algorithm and relative settings.
@@ -22,15 +50,6 @@ def get_solver(algorithm_str, solver_settings):
 
 
 def prepare_simulation(reader, frame, algorithm_str,  solver_settings, n_of_agents):
-    """
-    Solve the MAPF problem and visualize the simulation on the frame.
-    :param reader: Reader object for the loading of the map and the scen
-    :param frame: Frame where the simulation will be displayed
-    :param algorithm_str: String of the algorithm choose
-    :param independence_detection: True if Independence Detection will be used with the algorithm
-    :param solver_settings: Settings of the solver (heuristics, goal_occupation_time)
-    :param n_of_agents: Number of Agents on the map
-    """
 
     problem_map = load_map(reader)
     agents = load_agents(reader, problem_map, n_of_agents)
@@ -42,21 +61,10 @@ def prepare_simulation(reader, frame, algorithm_str,  solver_settings, n_of_agen
     paths, output_infos = solver.solve(problem_instance, verbose=True, return_infos=True)
     print("Solved.")
 
-    plot_on_gui(problem_instance, solver_settings, frame, paths, output_infos)
+    plot_on_gui(problem_instance,  frame, paths, output_infos)
 
 
-def plot_paths(problem_instance, solver_settings, paths):
-    from tkinter import Tk, Frame
-    root = Tk()
-    frame = Frame(root)
-    frame.pack()
-
-    plot_on_gui(problem_instance, solver_settings, frame, paths)
-
-    root.mainloop()
-
-
-def plot_on_gui(problem_instance, solver_settings, frame, paths=None, output_infos=None):
+def plot_on_gui(problem_instance,  frame, paths=None, output_infos=None):
     """
     Plot the result on GUIdd.
     :param problem_instance: instance of the problem.
@@ -67,12 +75,11 @@ def plot_on_gui(problem_instance, solver_settings, frame, paths=None, output_inf
     """
     print("In plot_on_gui   ")
     print("problem_instance ", problem_instance)
-    print("solver_settings  ", solver_settings)
     print("frame            ", frame)
     print("paths            ", paths)
     print("output_infos     ", output_infos)
 
-    window = Visualize(problem_instance, solver_settings, frame, paths, output_infos)
+    window = Visualize(problem_instance, frame, paths, output_infos)
     window.initialize_window()
 
 

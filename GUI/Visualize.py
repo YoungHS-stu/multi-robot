@@ -12,17 +12,16 @@ class Visualize:
     This class takes care of the visualization of the simulation of the MAPF solution.
     """
 
-    def __init__(self, problem_instance, solver_settings, frame, paths, output_infos):
+    def __init__(self, problem_instance,  frame, paths, output_infos):
         """
         Initialize the frame.
         :param problem_instance:
-        :param solver_settings:
+
         :param frame:
         :param paths:
         :param output_infos:
         """
         self._problem_instance = problem_instance
-        self._solver_settings = solver_settings
         self._frame = frame
         #print(frame)
         self._paths = paths
@@ -71,9 +70,6 @@ class Visualize:
         self.reset_button.configure(state=DISABLED)
         self.reset_button.pack(side=RIGHT)
 
-        # Speed Regulation Widgets
-        #self.speed_txt_var = StringVar()
-        #self.initialize_speed_regulation_widgets()
 
         # Time Step Counter
         self.time_step_counter = -1
@@ -153,7 +149,7 @@ class Visualize:
         """
         for widget in self._frame.winfo_children():
             widget.destroy()
-        self.__init__(self._problem_instance, self._solver_settings, self._frame, self._paths, self._output_infos)
+        self.__init__(self._problem_instance,  self._frame, self._paths, self._output_infos)
         self.draw_world()
         self.draw_agents()
 
@@ -165,46 +161,7 @@ class Visualize:
             widget.destroy()
         self._frame.quit()
 
-    # def initialize_speed_regulation_widgets(self):
-    #     """
-    #     Insert the speed widgets in the frame.
-    #     """
-    #     # Load Images
-    #     root_path = pathlib.Path(__file__).parent
-    #
-    #     speed_up_img = self.load_image(root_path / "Images/speed_up.png", (30, 30))
-    #     speed_down_img = self.load_image(root_path / "Images/speed_down.png", (30, 30))
-    #
-    #     # Speed Up Button
-    #     speed_up_button = Button(self.infos_and_buttons_canvas, image=speed_up_img, command=self.speed_up_function)
-    #     speed_up_button.pack(side=RIGHT, padx=(0, 20))
-    #
-    #     # Speed Text
-    #     speed_txt = Label(self.infos_and_buttons_canvas, textvariable=self.speed_txt_var, justify=LEFT,
-    #                       font=("Lucida Console", 10))
-    #     self.speed_txt_var.set("1X")
-    #     speed_txt.pack(side=RIGHT, padx=10)
-    #
-    #     # Speed Down Button
-    #     speed_down_button = Button(self.infos_and_buttons_canvas, image=speed_down_img,
-    #                                command=self.speed_down_function)
-    #     speed_down_button.pack(side=RIGHT, padx=(20, 0))
 
-    # def speed_down_function(self):
-    #     """
-    #     Decrease the speed of the animation.
-    #     """
-    #     if not self.animation_speed <= (SPEED_1X/10): #0.1
-    #         self.animation_speed = self.animation_speed - SPEED_1X/10
-    #         self.speed_txt_var.set(str(self.animation_speed/SPEED_1X)+"X")
-
-    # def speed_up_function(self):
-    #     """
-    #     Increase the speed of the animation.
-    #     """
-    #     if not self.animation_speed >= (SPEED_1X*1.9): #1.9
-    #         self.animation_speed = self.animation_speed + SPEED_1X/10
-    #         self.speed_txt_var.set(str(self.animation_speed/SPEED_1X)+"X")
 
     def set_infos_txt(self):
         """
@@ -240,7 +197,6 @@ class Visualize:
             g_col, g_row = a.get_goal()
 
             agent_color = COLORS_LIST[i % len(COLORS_LIST)]
-            # random_color = '#%02x%02x%02x' % tuple(np.random.choice(range(256), size=3))
             self.agents_colors.append(agent_color)
             self.agents_ovals.append(self.map_canvas.create_oval(FRAME_MARGIN + self.cell_w * s_col,
                                                                  FRAME_MARGIN + self.cell_h * s_row,
@@ -306,8 +262,7 @@ class Visualize:
                         self.y_moves[i] = float((next_position[1] - current_position[1]) * self.dynamic_cell_h) / N_OF_STEPS
                         self.map_canvas.move(self.agents_ovals[i], self.x_moves[i], self.y_moves[i])
                         self.steps_count[i] = 1
-                # if not self._solver_settings.stay_at_goal() and not self.path_to_visit[i]:
-                #     self.map_canvas.delete(self.agents_ovals[i])
+
 
             if not [i for i in self.path_to_visit if i]:  # For checking that all the arrays are empty
                 self.animating = False
@@ -351,5 +306,3 @@ class Visualize:
     def do_loop(self):
         self._frame.mainloop()
 
-
-# V = Visualize()
