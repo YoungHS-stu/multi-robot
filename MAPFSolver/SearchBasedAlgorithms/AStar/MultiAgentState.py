@@ -71,13 +71,12 @@ class MultiAgentState(State):
         if len(next_active_positions) != len(set(next_active_positions)):
             return True
 
-        if self._solver_settings.is_edge_conflict():
-            for i, next_pos in enumerate(next_positions):
-                for j, cur_pos in enumerate(current_positions):
-                    if i != j:
-                        if next_pos == cur_pos:
-                            if next_positions[j] == current_positions[i]:
-                                return True
+        for i, next_pos in enumerate(next_positions):
+            for j, cur_pos in enumerate(current_positions):
+                if i != j:
+                    if next_pos == cur_pos:
+                        if next_positions[j] == current_positions[i]:
+                            return True
         return False
 
     def colliding_robots(self, multi_state):
@@ -97,17 +96,17 @@ class MultiAgentState(State):
                     colliding_robots.add(i)
                     colliding_robots.add(j)
 
-        if self._solver_settings.is_edge_conflict():
-            current_positions = self.get_positions_list()
-            next_positions = multi_state.get_positions_list()
 
-            for i, next_pos in enumerate(next_positions):
-                for j, cur_pos in enumerate(current_positions):
-                    if i != j:
-                        if next_pos == cur_pos:
-                            if next_positions[j] == current_positions[i]:
-                                colliding_robots.add(i)
-                                colliding_robots.add(j)
+        current_positions = self.get_positions_list()
+        next_positions = multi_state.get_positions_list()
+
+        for i, next_pos in enumerate(next_positions):
+            for j, cur_pos in enumerate(current_positions):
+                if i != j:
+                    if next_pos == cur_pos:
+                        if next_positions[j] == current_positions[i]:
+                            colliding_robots.add(i)
+                            colliding_robots.add(j)
 
         return colliding_robots
 

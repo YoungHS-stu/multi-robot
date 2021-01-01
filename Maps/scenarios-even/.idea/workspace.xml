@@ -2,179 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="32324798-5954-4525-8212-15aa3a4fa68f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../GUI/StartMenu.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../GUI/StartMenu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../GUI/Visualize.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../GUI/Visualize.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../GUI/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../GUI/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../GUI/start_simulation.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../GUI/start_simulation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../MAPFSolver/Utilities/Agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../MAPFSolver/Utilities/Agent.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../MAPFSolver/Utilities/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../MAPFSolver/Utilities/Map.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../MAPFSolver/Utilities/ProblemInstance.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../MAPFSolver/Utilities/ProblemInstance.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GUI/macros.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../GUI/macros.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GUI/start_simulation.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../MAPFSolver/SearchBasedAlgorithms/AStar/MultiAgentState.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../MAPFSolver/SearchBasedAlgorithms/AStar/MultiAgentState.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../MAPFSolver/SearchBasedAlgorithms/CBS/ConstraintTreeNode.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../MAPFSolver/SearchBasedAlgorithms/CBS/ConstraintTreeNode.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../MAPFSolver/SearchBasedAlgorithms/IDFramework.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../MAPFSolver/Utilities/AStar.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../MAPFSolver/Utilities/AStar.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../MAPFSolver/Utilities/Reader.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../MAPFSolver/Utilities/Reader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../MAPFSolver/Utilities/SolverSettings.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../MAPFSolver/Utilities/SolverSettings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../MAPFSolver/Utilities/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../MAPFSolver/Utilities/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../MAPFSolver/Utilities/problem_generation.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../MAPFSolver/Utilities/useful_functions.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-16-16-even-10.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-16-16-even-11.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-16-16-even-12.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-16-16-even-13.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-16-16-even-14.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-16-16-even-15.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-16-16-even-16.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-16-16-even-17.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-16-16-even-18.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-16-16-even-19.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-16-16-even-20.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-16-16-even-21.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-16-16-even-22.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-16-16-even-23.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-16-16-even-24.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-16-16-even-25.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-16-16-even-6.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-16-16-even-7.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-16-16-even-8.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-16-16-even-9.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-32-32-even-10.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-32-32-even-11.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-32-32-even-12.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-32-32-even-13.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-32-32-even-14.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-32-32-even-15.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-32-32-even-16.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-32-32-even-17.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-32-32-even-18.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-32-32-even-19.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-32-32-even-20.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-32-32-even-21.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-32-32-even-22.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-32-32-even-23.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-32-32-even-24.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-32-32-even-25.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-32-32-even-6.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-32-32-even-7.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-32-32-even-8.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-32-32-even-9.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-8-8-even-10.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-8-8-even-11.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-8-8-even-12.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-8-8-even-13.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-8-8-even-14.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-8-8-even-15.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-8-8-even-16.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-8-8-even-17.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-8-8-even-18.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-8-8-even-19.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-8-8-even-20.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-8-8-even-21.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-8-8-even-22.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-8-8-even-23.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-8-8-even-24.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-8-8-even-25.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-8-8-even-6.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-8-8-even-7.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-8-8-even-8.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/empty-8-8-even-9.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-2-even-10.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-2-even-11.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-2-even-12.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-2-even-13.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-2-even-14.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-2-even-15.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-2-even-16.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-2-even-17.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-2-even-18.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-2-even-19.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-2-even-20.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-2-even-21.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-2-even-22.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-2-even-23.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-2-even-24.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-2-even-25.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-2-even-6.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-2-even-7.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-2-even-8.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-2-even-9.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-4-even-10.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-4-even-11.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-4-even-12.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-4-even-13.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-4-even-14.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-4-even-15.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-4-even-16.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-4-even-17.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-4-even-18.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-4-even-19.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-4-even-20.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-4-even-21.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-4-even-22.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-4-even-23.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-4-even-24.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-4-even-25.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-4-even-6.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-4-even-7.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-4-even-8.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maze-32-32-4-even-9.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-10-even-10.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-10-even-11.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-10-even-12.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-10-even-13.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-10-even-14.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-10-even-15.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-10-even-16.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-10-even-17.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-10-even-18.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-10-even-19.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-10-even-20.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-10-even-21.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-10-even-22.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-10-even-23.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-10-even-24.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-10-even-25.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-10-even-6.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-10-even-7.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-10-even-8.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-10-even-9.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-20-even-10.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-20-even-11.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-20-even-12.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-20-even-13.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-20-even-14.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-20-even-15.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-20-even-16.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-20-even-17.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-20-even-18.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-20-even-19.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-20-even-20.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-20-even-21.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-20-even-22.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-20-even-23.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-20-even-24.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-20-even-25.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-20-even-6.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-20-even-7.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-20-even-8.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/random-32-32-20-even-9.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-32-32-4-even-10.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-32-32-4-even-11.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-32-32-4-even-12.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-32-32-4-even-13.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-32-32-4-even-14.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-32-32-4-even-15.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-32-32-4-even-16.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-32-32-4-even-17.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-32-32-4-even-18.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-32-32-4-even-19.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-32-32-4-even-20.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-32-32-4-even-21.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-32-32-4-even-22.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-32-32-4-even-23.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-32-32-4-even-24.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-32-32-4-even-25.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-32-32-4-even-6.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-32-32-4-even-7.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-32-32-4-even-8.scen" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-32-32-4-even-9.scen" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../MAPFSolver/Utilities/paths_processing.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../MAPFSolver/Utilities/paths_processing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

@@ -128,7 +128,6 @@ class StartMenu:
         self.selected_goal_occupation_time = IntVar()
         self.selected_n_of_agents = IntVar()
         self.selected_scene_number = IntVar()
-        self.edge_conflicts_var = BooleanVar()
         self.time_out_var = IntVar()
 
         self.initialize_variables()
@@ -185,7 +184,7 @@ class StartMenu:
         self.selected_goal_occupation_time.set(1)
         self.selected_n_of_agents.set(5)
         self.selected_scene_number.set(1)
-        self.edge_conflicts_var.set(True)
+
 
         self.time_out_var.set(0)
         self.waiting_var.set("")
@@ -299,11 +298,7 @@ class StartMenu:
         lbl_title = Label(self.algorithm_settings_frame, text="EDGE CONFLICTS", font=self.font_titles, fg=self.color_titles)
         lbl_title.pack(anchor=W, pady=self.pady_titles)
 
-        # Edge Conflicts Checkbutton
-        edge_button = Checkbutton(self.algorithm_settings_frame, text="Edge Conflicts",
-                                  variable=self.edge_conflicts_var, onvalue=True, offvalue=False)
-        self.buttons_list.append(edge_button)
-        edge_button.pack(anchor=W)
+    
 
         # Time out Label
         time_out_label = Label(self.algorithm_settings_frame, text="TIME OUT", font=self.font_titles, fg=self.color_titles)
@@ -402,7 +397,7 @@ class StartMenu:
         # Create an instance of the class SolverSettings
         solver_settings = SolverSettings(self.selected_objective_function_var.get(),
                                          self.selected_goal_occupation_time.get(),
-                                         self.edge_conflicts_var.get(), self.time_out_var.get())
+                                         self.time_out_var.get())
 
         # Prepare to show the simulation on the given frame
         prepare_simulation(self.reader, self.simulation_frame, self.selected_algorithm_var.get(),

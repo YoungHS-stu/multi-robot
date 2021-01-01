@@ -23,13 +23,12 @@ class Visualize:
         """
         self._problem_instance = problem_instance
         self._frame = frame
-        #print(frame)
         self._paths = paths
         self._output_infos = output_infos
         self.random_images_list = []
         self._goals_list = [a.get_goal() for a in self._problem_instance.get_agents()]
 
-        self.animation_speed = 30
+        self.animation_speed = 10
         self._frame_width, self._frame_height = get_frame_dimension(self._problem_instance.get_map().get_height(),
                                                                     self._problem_instance.get_map().get_width())
 
@@ -37,15 +36,13 @@ class Visualize:
         self.visualize_frame = Frame(self._frame)
         self.visualize_frame.pack(ipady=5)
 
-        # Visualize Canvas: inside the Visualize Frame
+        # Visualize Map Canvas: inside the Visualize Frame
         self.visualize_canvas = Canvas(self.visualize_frame)
         self.visualize_canvas.pack(ipady=5)
-
-        # Map Canvas: inside the Visualize Canvas
         self.map_canvas = Canvas(self.visualize_canvas, width=self._frame_width, height=self._frame_height)
-
-        # Scrollbar Set Up
-        self.set_up_scrollbar()
+        self.map_canvas.grid(row=0, column=0, sticky="nsew")
+        self.map_canvas.grid_rowconfigure(0, weight=1)
+        self.map_canvas.grid_columnconfigure(0, weight=1)
 
         # Infos and Buttons Canvas
         self.infos_and_buttons_canvas = Canvas(self.visualize_frame)
@@ -86,11 +83,10 @@ class Visualize:
                                    self._problem_instance.get_map().get_width()), dtype=int)
         self.agents_ovals = []
         self.agents_colors = []
-        self.text_list = []
+        self.agent_text_list = []
 
         # For animation
         self.animating = True
-        self._footsteps = False
         self.path_to_visit = []
         self.steps_count = [N_OF_STEPS] * len(self._problem_instance.get_agents())
         self.x_moves = [0] * len(self._problem_instance.get_agents())
@@ -110,43 +106,19 @@ class Visualize:
             self.start_button.configure(state=DISABLED)
 
             self.map_canvas.create_text(self._frame_width / 2, self._frame_height / 2, justify=CENTER,
-                                        font=("Purisa", get_font_dimension(self.dynamic_cell_w,
-                                                                           self.dynamic_cell_h)),
+                                        font=("Purisa", 16),
                                         fill="Red", text="PATHS NOT COMPUTED\nThe program is not able to compute the "
                                                          "solution\nin the given timeout")
         self.do_loop()
 
-    def set_up_scrollbar(self):
-        """
-        Set up the Scrollbar for the visualization of the map
-        """
-        xsb = Scrollbar(self.visualize_canvas, orient="horizontal", command=self.map_canvas.xview)
-        ysb = Scrollbar(self.visualize_canvas, orient="vertical", command=self.map_canvas.yview)
-        self.map_canvas.configure(yscrollcommand=ysb.set, xscrollcommand=xsb.set)
-        self.map_canvas.configure(scrollregion=(0, 0, 100, 100))
-
-        xsb.grid(row=1, column=0, sticky="ew")
-        ysb.grid(row=0, column=1, sticky="ns")
-        self.map_canvas.grid(row=0, column=0, sticky="nsew")
-        self.map_canvas.grid_rowconfigure(0, weight=1)
-        self.map_canvas.grid_columnconfigure(0, weight=1)
-
 
     def start_function(self):
-        """
-        Start Button behaviour: start the Path Animation.
-        """
         self.start_button.configure(state=DISABLED)
         self.quit_button.configure(state=DISABLED)
         if self._paths is not None:
-            # window.draw_paths(paths)
-            self.draw_footsteps()
             self.start_animation(self._paths)
 
     def reset_function(self):
-        """
-        Reset Button behaviour: reset the Path Animation.
-        """
         for widget in self._frame.winfo_children():
             widget.destroy()
         self.__init__(self._problem_instance,  self._frame, self._paths, self._output_infos)
@@ -154,13 +126,9 @@ class Visualize:
         self.draw_agents()
 
     def quit_function(self):
-        """
-        Quit Button behaviour: close the Frame.
-        """
         for widget in self._frame.winfo_children():
             widget.destroy()
         self._frame.quit()
-
 
 
     def set_infos_txt(self):
@@ -204,17 +172,17 @@ class Visualize:
                                                                  FRAME_MARGIN + self.cell_h * (s_row + 1),
                                                                  outline='black', fill=agent_color))
             self.map_canvas.itemconfig(self.vis_cells[s_row][s_col], fill=agent_color, width=1.5)
-            self.map_canvas.itemconfig(self.vis_cells[g_row][g_col], fill=agent_color, stipple="gray75", width=1.5)
-            self.text_list.append(self.map_canvas.create_text(FRAME_MARGIN + self.cell_w * s_col + self.cell_w / 2,
-                                                              FRAME_MARGIN + self.cell_h * s_row + self.cell_h / 2,
-                                                              font=("Purisa", get_font_dimension(self.dynamic_cell_w,
-                                                                                                 self.dynamic_cell_h)),
-                                                              text="S"))
-            self.text_list.append(self.map_canvas.create_text(FRAME_MARGIN + self.cell_w * g_col + self.cell_w / 2,
-                                                              FRAME_MARGIN + self.cell_h * g_row + self.cell_h / 2,
-                                                              font=("Purisa", get_font_dimension(self.dynamic_cell_w,
-                                                                                                 self.dynamic_cell_h)),
-                                                              text="G"))
+            self.map_canvas.itemconfig(self.vis_cells[g_row][g_col], fill=agent_color, stipple="gray50", width=1.5)
+
+            self.agent_text_list.append(self.map_canvas.create_text(FRAME_MARGIN + self.cell_w * s_col + self.cell_w / 2,
+                                                                    FRAME_MARGIN + self.cell_h * s_row + self.cell_h / 2,
+                                                                    font=("Purisa", 12),
+                                                                    text="S"))
+
+            self.agent_text_list.append(self.map_canvas.create_text(FRAME_MARGIN + self.cell_w * g_col + self.cell_w / 2,
+                                                                    FRAME_MARGIN + self.cell_h * g_row + self.cell_h / 2,
+                                                                    font=("Purisa", 12),
+                                                                    text="G"))
 
     def draw_paths(self, paths):
         """
@@ -238,7 +206,7 @@ class Visualize:
         Function for the Path Animation.
         """
         if self.animating:
-            self._frame.after(int(MAX_SPEED - self.animation_speed), self.animation_function)
+            self._frame.after(int(self.animation_speed), self.animation_function)
             inc_time_step = True
             for i, agent in enumerate(self.agents_ovals):
                 if self.steps_count[i] < N_OF_STEPS:
@@ -251,11 +219,11 @@ class Visualize:
 
                         inc_time_step = False
                     current_position = self.path_to_visit[i].pop(0)
-                    if self._footsteps:
-                        color = self.agents_colors[i]
-                        if current_position not in self._goals_list:  # To not overwrite others goals
-                            self.map_canvas.itemconfig(self.vis_cells[current_position[1]][current_position[0]],
-                                                       fill=color, stipple="", width=1.5)
+
+                    color = self.agents_colors[i]
+                    if current_position not in self._goals_list:  # To not overwrite others goals
+                        self.map_canvas.itemconfig(self.vis_cells[current_position[1]][current_position[0]],
+                                                   fill=color, stipple="", width=1.5)
                     if self.path_to_visit[i]:
                         next_position = self.path_to_visit[i][0]
                         self.x_moves[i] = float((next_position[0] - current_position[0]) * self.dynamic_cell_w) / N_OF_STEPS
@@ -273,11 +241,6 @@ class Visualize:
             self.reset_button.configure(state=NORMAL)
             self.quit_button.configure(state=NORMAL)
 
-    def draw_footsteps(self):
-        """
-        Set the footstep variable to True.
-        """
-        self._footsteps = True
 
     def get_cell_size(self):
         """

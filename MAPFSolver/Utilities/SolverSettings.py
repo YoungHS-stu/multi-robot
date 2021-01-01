@@ -6,8 +6,7 @@ class SolverSettings:
     initialization.
     """
 
-    def __init__(self,  objective_function="SOC",  goal_occupation_time=1,
-                 edge_conflict=True, time_out=None):
+    def __init__(self,  objective_function="SOC",  goal_occupation_time=1, time_out=None):
         """
         Initialization of the variables representing the solver settings.
         :param heuristic: heuristic used. ("Manhattan" or "Abstract Distance with RRA*")
@@ -70,11 +69,6 @@ class SolverSettings:
         """
         self._goal_occupation_time = time
 
-    def is_edge_conflict(self):
-        """
-        Return True if the edge conflicts are considered in addition to the vertex conflicts.
-        """
-        return self._edge_conflict
 
     def set_time_out(self, time_out):
         """

@@ -7,7 +7,7 @@ import time
 
 class CooperativeAStarSolver(AbstractSolver):
     """
-    Cooperative A* solver. If used with the AbstractDistance heuristics, it is the Hierarchical Cooperative A*.
+    Cooperative A* solver.
     """
 
     def __init__(self, solver_settings):
@@ -19,7 +19,6 @@ class CooperativeAStarSolver(AbstractSolver):
         self._reservation_table = None
         self._completed_pos = None
         self._solution = []
-
         self._stop_event = None
 
     def solve(self, problem_instance, verbose=False, return_infos=False):

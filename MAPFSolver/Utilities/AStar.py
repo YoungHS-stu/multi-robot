@@ -39,9 +39,7 @@ class AStar:
             if cur_state.goal_test():
                 path = cur_state.get_path_to_root()
                 goal = cur_state.get_position()
-                # if not self._solver_settings.stay_at_goal():
-                #     for i in range(self._solver_settings.get_goal_occupation_time()-1):
-                #         path.append(goal)
+ 
                 return path
 
             if cur_state.get_position() not in self._closed_list_of_positions:
@@ -112,12 +110,10 @@ class AStar:
                                                 block_previous_agents_when_in_goal
 
                     if not conflict_with_other_agent:
-                        if self._solver_settings.is_edge_conflict():
-                            if not (state.time_step()-1 in busy_times and state.time_step() in cur_pos_busy_times):
-                                # not(if the time step before the position was busy and the before position is busy now)
-                                expanded_nodes_no_conflicts.append(state)
-                        else:
+                        if not (state.time_step()-1 in busy_times and state.time_step() in cur_pos_busy_times):
+                            # not(if the time step before the position was busy and the before position is busy now)
                             expanded_nodes_no_conflicts.append(state)
+
 
                 self._frontier.extend(expanded_nodes_no_conflicts)
 

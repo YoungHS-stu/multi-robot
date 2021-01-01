@@ -1,6 +1,49 @@
 from MAPFSolver.Utilities.AStar import AStar
-from MAPFSolver.Utilities.paths_processing import calculate_soc, calculate_makespan, check_conflicts_with_type
+from MAPFSolver.Utilities.paths_processing import calculate_soc, calculate_makespan
+def normalize_paths_lengths(paths):
+    """
+    It receives a list of paths of different lengths. It normalize all this lengths by adding goal state to all the
+    short paths.
+    :param paths: paths to update.
+    :return: return the updated paths.
+    """
+    import copy
+    max_length = max([len(path) for path in paths])
+    new_paths = copy.deepcopy(paths)
 
+    for path in new_paths:
+        while len(path) < max_length:
+            path.append(path[len(path)-1])
+
+    return new_paths
+    
+def check_conflicts_with_type(paths):
+    """
+    Returns a couple (type of constraint, new children constraints) or None if the state has no conflicts.
+    It is used for the CBS algorithm.
+    - In case a vertex conflict is found it will returns the two child conflicts:
+    Example: (ai, aj, v, t) -> as [(ai, v, t), (aj, v, t)]
+    - In case an edge conflict is found it will returns the two child conflicts:
+    Example: [(ai, pos_i, pos_f, ts_f), (aj, pos_i, pos_f, ts_f)]
+    """
+    reservation_table = dict()
+    paths = normalize_paths_lengths(paths)
+
+    for ag_i, path in enumerate(paths):
+        for ts, pos in enumerate(path):
+            if reservation_table.get((pos, ts)) is not None:
+                return 'vertex_conflict', [(reservation_table[(pos, ts)], pos, ts), (ag_i, pos, ts)]
+            reservation_table[(pos, ts)] = ag_i
+
+    for ag_i, path in enumerate(paths):
+        for ts, pos in enumerate(path):
+            ag_j = reservation_table.get((pos, ts - 1))  # Agent in the pos position at the previous time step.
+            if ag_j is not None and ag_j != ag_i:
+                if len(paths[ag_j]) > ts:  # To be sure that the ag_j will still exists in the next time step.
+                    if paths[ag_j][ts] == path[ts - 1]:
+                        return 'edge_conflict', [(ag_j, paths[ag_j][ts-1], paths[ag_j][ts], ts),
+                                                    (ag_i, path[ts-1], path[ts], ts)]
+    return None
 
 class ConstraintTreeNode:
     """
@@ -93,8 +136,7 @@ class ConstraintTreeNode:
             return []
 
         if self.conflict is None:
-            conflict_type, constraints = check_conflicts_with_type(self._solution, 
-                                                                   self._solver_settings.is_edge_conflict())
+            conflict_type, constraints = check_conflicts_with_type(self._solution)
         else:
             conflict_type, constraints = self.conflict
 
@@ -176,8 +218,7 @@ class ConstraintTreeNode:
         if self._solution is None:
             return False
 
-        self.conflict = check_conflicts_with_type(self._solution, 
-                                                  self._solver_settings.is_edge_conflict())
+        self.conflict = check_conflicts_with_type(self._solution)
 
         if self.conflict is None:
             return True
