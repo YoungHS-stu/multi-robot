@@ -22,71 +22,40 @@ class State(object):
         self._parent = parent
 
     def parent(self):
-        """
-        Return the parent state.
-        """
         return self._parent
 
     def g_value(self):
-        """
-        Return the g-value of the state.
-        """
+
         return self._g
 
     def h_value(self):
-        """
-        Return the h-value of the state.
-        """
         return self._h
 
     def f_value(self):
-        """
-        Return the f-value of the state.
-        """
         return self._g + self._h
 
     def is_root(self):
-        """
-        Return True if the state is a root state.
-        """
         return self._parent is None
 
     def set_time_step(self, ts):
-        """
-        Modify the time step value with ts.
-        :param ts: time step to set.
-        """
         self._time_step = ts
 
     def time_step(self):
-        """
-        Return the time step of the state.
-        """
         return self._time_step
 
-    """
-    =================================== A* functions ===============================
-    """
+
     @abc.abstractmethod
     def expand(self, verbose=False):
-        """
-        expand current state according to problemInstance
-        """
+        """expand current state according to problemInstance"""
 
     @abc.abstractmethod
     def goal_test(self):
-        """
-        test if state is goal state
-        """
+        """test if state is goal state"""
 
     @abc.abstractmethod
     def compute_heuristics(self):
-        """
-        Set hValue
-        """
+        """Set hValue"""
 
     @abc.abstractmethod
     def compute_cost(self):
-        """
-        Calculate gValue
-        """
+        """Calculate gValue"""

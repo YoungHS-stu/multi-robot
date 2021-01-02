@@ -53,7 +53,7 @@ class CBSSolver(AbstractSolver):
 
         return self._solution if not return_infos else (self._solution, output_infos)
 
-    def solve_problem(self, problem_instance, verbose=False):
+    def solve_problem(self, problem_instance, verbose=True):
         """
         At the high-level, CBS searches a constraint tree (CT). A CT is a binary tree. Each node N in the CT contains
         the following fields of data:

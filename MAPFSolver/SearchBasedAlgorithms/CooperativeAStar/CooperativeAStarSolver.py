@@ -54,6 +54,8 @@ class CooperativeAStarSolver(AbstractSolver):
 
         paths = []
         for i, agent in enumerate(problem_instance.get_agents()):
+
+            print(i," ",agent)
             if self._stop_event.is_set():
                 break
 
@@ -77,9 +79,9 @@ class CooperativeAStarSolver(AbstractSolver):
                 self._reservation_table[pos].sort()
                 self._completed_pos.append(path[-1])
 
-            """print("Path:", path)
+            print("Path:", path)
             print("Reservation table:", self._reservation_table)
-            print("Completed pos:", self._completed_pos)"""
+            print("Completed pos:", self._completed_pos)
 
         self._solution = paths
 

@@ -1,6 +1,6 @@
 from MAPFSolver.Utilities.AStar import AStar
 
-def calculate_soc(paths,  goal_occupation_time):
+def calculate_soc(paths):
     """
     Given the list of paths it return the sum of cost value. Time spent in goal is not considered.
     :param paths: list of paths.
@@ -18,7 +18,7 @@ def calculate_soc(paths,  goal_occupation_time):
     return soc
 
 
-def calculate_makespan(paths, goal_occupation_time):
+def calculate_makespan(paths):
     """
     Given the list of paths it return the makespan value. Time spent in goal is not considered.
     :param paths: list of paths.
@@ -215,16 +215,10 @@ class ConstraintTreeNode:
             return []
 
     def calculate_cost(self):
-        """
-        Compute the cost of the solution based on the objective function we are minimizing.
-        :return:
-        """
         if self._solver_settings.get_objective_function() == "SOC":
-            return calculate_soc(self._solution, 
-                                 self._solver_settings.get_goal_occupation_time())
+            return calculate_soc(self._solution)
         if self._solver_settings.get_objective_function() == "Makespan":
-            return calculate_makespan(self._solution, 
-                                      self._solver_settings.get_goal_occupation_time())
+            return calculate_makespan(self._solution)
 
     def total_cost(self):
         """
@@ -259,11 +253,6 @@ class ConstraintTreeNode:
             return False
 
     def solution(self):
-        """
-        Return the solution found for the current node. Note that the list of paths can have conflicts.
-        Check if the solution has no conflicts before call this method otherwise the solution returned could not be
-        valid.
-        """
         return self._solution
 
     def __str__(self):
