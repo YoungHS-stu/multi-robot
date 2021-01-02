@@ -27,11 +27,10 @@ class CBSSolver(AbstractSolver):
 
         self._stop_event = None
 
-    def solve(self, problem_instance, verbose=False, return_infos=False):
+    def solve(self, problem_instance, return_infos=False):
         """
         Solve the given MAPF problem using the CBS algorithm and it returns, if exists, a solution.
         :param problem_instance: instance of the problem to solve.
-        :param verbose: if True, infos will be printed on terminal.
         :param return_infos: if True in addition to the paths will be returned also a structure with output infos.
         :return the solution as list of paths, and, if return_infos is True, a tuple composed by the solution and a
         struct with output information.
@@ -39,7 +38,7 @@ class CBSSolver(AbstractSolver):
         self._stop_event = Event()
         start = time.time()
 
-        thread = Thread(target=self.solve_problem, args=(problem_instance, verbose,))
+        thread = Thread(target=self.solve_problem, args=(problem_instance,))
         thread.start()
         thread.join(timeout=self._solver_settings.get_time_out())
         self._stop_event.set()
@@ -48,12 +47,10 @@ class CBSSolver(AbstractSolver):
 
         output_infos = self.generate_output_infos(self._n_of_generated_nodes, self._n_of_expanded_nodes,
                                                   time.time() - start)
-        if verbose:
-            print("Problem ended: ", output_infos)
 
         return self._solution if not return_infos else (self._solution, output_infos)
 
-    def solve_problem(self, problem_instance, verbose=True):
+    def solve_problem(self, problem_instance):
         """
         At the high-level, CBS searches a constraint tree (CT). A CT is a binary tree. Each node N in the CT contains
         the following fields of data:
@@ -74,12 +71,6 @@ class CBSSolver(AbstractSolver):
 
             if self._stop_event.is_set():
                 break
-
-            if verbose:
-                print("Expanding state ... Tot constr:",
-                      len(cur_state.vertex_constraints()) + len(cur_state.edge_constraints()),
-                      " Vertex constr: ", cur_state.vertex_constraints(),
-                      "Edge constr: ", cur_state.edge_constraints())
 
             if cur_state.is_valid():
                 self._solution = cur_state.solution()

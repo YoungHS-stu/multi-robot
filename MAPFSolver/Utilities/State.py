@@ -45,7 +45,7 @@ class State(object):
 
 
     @abc.abstractmethod
-    def expand(self, verbose=False):
+    def expand(self):
         """expand current state according to problemInstance"""
 
     @abc.abstractmethod

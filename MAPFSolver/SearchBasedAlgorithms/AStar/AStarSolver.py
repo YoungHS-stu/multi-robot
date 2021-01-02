@@ -25,11 +25,10 @@ class AStarSolver(AbstractSolver):
 
         self._stop_event = None
 
-    def solve(self, problem_instance, verbose=False, return_infos=False):
+    def solve(self, problem_instance, return_infos=False):
         """
         Solve the given MAPF problem using the A* algorithm and it returns, if exists, a solution.
         :param problem_instance: instance of the problem to solve.
-        :param verbose: if True, infos will be printed on terminal.
         :param return_infos: if True in addition to the paths will be returned also a structure with output infos.
         :return the solution as list of paths, and, if return_infos is True, a tuple composed by the solution and a
         struct with output information.
@@ -37,7 +36,7 @@ class AStarSolver(AbstractSolver):
         self._stop_event = Event()
         start = time.time()
 
-        thread = Thread(target=self.solve_problem, args=(problem_instance, verbose,))
+        thread = Thread(target=self.solve_problem, args=(problem_instance,))
         thread.start()
         thread.join(timeout=self._solver_settings.get_time_out())
         self._stop_event.set()
@@ -50,16 +49,13 @@ class AStarSolver(AbstractSolver):
 
             output_infos = self.generate_output_infos(self._n_of_generated_nodes,
                                                       self._n_of_expanded_nodes, time.time() - start)
-        if verbose:
-            print("Problem ended: ", output_infos)
 
         return self._solution if not return_infos else (self._solution, output_infos)
 
-    def solve_problem(self, problem_instance, verbose=False):
+    def solve_problem(self, problem_instance):
         """
         Solve the MAPF problem using the A* algorithm.
         :param problem_instance: problem instance to solve
-        :param verbose: if True will be printed some computation infos on terminal.
         """
         self.initialize_problem(problem_instance)
         print("\n\n in AstarSolver, solver setting:\n",self._solver_settings)
@@ -81,7 +77,7 @@ class AStarSolver(AbstractSolver):
             # Standard version: no detect duplicates in the frontier.
             if not self._visited_list.contains_state_same_positions(cur_state):
                 self._visited_list.add(cur_state)
-                expanded_nodes = cur_state.expand(verbose=verbose)
+                expanded_nodes = cur_state.expand()
                 self._n_of_generated_nodes += len(expanded_nodes)
                 self._n_of_expanded_nodes += 1
                 self._frontier.extend(expanded_nodes)

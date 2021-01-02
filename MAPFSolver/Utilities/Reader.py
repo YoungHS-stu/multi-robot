@@ -19,7 +19,7 @@ MAPS_NAMES_LIST = {
 class Reader:
     """
     This class takes care of the loading of map and agents from the corresponding map files and scenario files.
-    In order to load a certain file the methods set_map(), set_scenario_type() and set_scenario_file_number() must be
+    In order to load a certain file the methods set_map() and set_scenario_file_number() must be
     called before calling the corresponding load_map_file() or load_scenario_file().
     """
 
@@ -27,7 +27,6 @@ class Reader:
         """
         Initialize a reader object.
         :param map_number: map number to load.
-        :param scenario_type: scenario type to load.
         :param scenario_file_number: scenario file number to load.
         """
         self._map_number = map_number
@@ -74,7 +73,6 @@ class Reader:
         """
         Load a set of agents from scenario file. This method keep into account those class variables:
         - self._map_number: in order to find the corresponding scenario file.
-        - self._scenario_type: the scenario files can be Even or Random.
         - self._scenario_file_number: number of the scenario file to pick.
         - self._reload_instances: this is False if I want to use the already loaded instances. If I've changed map or
                                   scenario this will be True since the instances need to be reloaded. This variable is
@@ -113,6 +111,7 @@ class Reader:
         :param map_height: height of the map.
         """
         if not os.path.isfile(scenario_file_path):
+            print(scenario_file_path)
             print("Scenario file not found!")
             exit(-1)
         ls = open(scenario_file_path, 'r').readlines()
@@ -164,17 +163,16 @@ def convert_nums(lst):
     return lst
 
 
-def get_scenario_file_path(map_number,  scenario_number):
+def get_scenario_file_path(map_number, scenario_number):
     """
     Given the number of the map, the type and the number of the scenario, it returns the path of the .scen file.
     :param map_number: number of the chosen map.
-    :param scenario_type: type of the chosen scenario.
     :param scenario_number: number if the chosen scenario.
     :return: path of the scenario file.
     """
     map_name = MAPS_NAMES_LIST.get(map_number)
     root_path = pathlib.Path(__file__).parent.parent.parent
-    scenario_file_path = str(root_path / "Maps/scenarios-") + "even" + "/" + map_name + "-" + "even" + "-" + str(
+    scenario_file_path = str(root_path / "Maps/scenarios") + "/" + map_name + "-" + str(
         scenario_number) + ".scen"
     return scenario_file_path
 

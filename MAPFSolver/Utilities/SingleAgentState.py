@@ -24,7 +24,7 @@ class SingleAgentState(State):
         self.compute_cost()
         self.compute_heuristics()
 
-    def expand(self, verbose=False):
+    def expand(self):
         """
         Expand the current state. It computes the possible neighbour positions and creates a state for each new possible
         position. We can see that even if an agent has reached his goal the expansion is still possible. He will be able

@@ -23,15 +23,12 @@ class MultiAgentState(State):
         self.compute_cost()
         self.compute_heuristics()
 
-    def expand(self, verbose=False):
+    def expand(self):
         """
         Expand the current state. For each single state it computes all the possible moves for that agent.
         Then these states are iterated in order to obtain all the possible multi agent state combinations.
         :return: the list of possible next states.
         """
-        if verbose:
-            print("Expansion in progress...", end=' ')
-
         candidate_list = []
         for single_state in self._single_agents_states:
             single_state_neighbor_list = single_state.expand()
@@ -52,8 +49,6 @@ class MultiAgentState(State):
             if not self.is_conflict(m):
                 free_conflict_states.append(m)
 
-        if verbose:
-            print("DONE! Number of expanded states:", len(free_conflict_states))
 
         return free_conflict_states
 

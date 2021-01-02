@@ -64,7 +64,7 @@ def prepare_simulation(reader, frame, algorithm_str,  solver_settings, n_of_agen
 
     solver = get_solver(algorithm_str, solver_settings)
     print("Solver --> ", solver, "\nSolving...")
-    paths, output_infos = solver.solve(problem_instance, verbose=True, return_infos=True)
+    paths, output_infos = solver.solve(problem_instance, return_infos=True)
     print("Solved.")
 
     plot_on_gui(problem_instance,  frame, paths, output_infos)

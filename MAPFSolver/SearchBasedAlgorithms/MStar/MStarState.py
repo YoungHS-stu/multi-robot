@@ -23,7 +23,7 @@ class MStarState(MultiAgentState):
         self.compute_cost()
         self.compute_heuristics()
 
-    def expand(self, verbose=False):
+    def expand(self):
         """
         Expand the current state. For each single state, if the corresponding agent is not in the collision set, the
         next single state will be the one obtained by following the optimal policy, otherwise if it is in the collision
@@ -31,8 +31,6 @@ class MStarState(MultiAgentState):
         Then these states are iterated in order to obtain all the possible multi agent state combinations.
         :return: the list of possible next states.
         """
-        if verbose:
-            print("Expansion in progress... COLLISIONS SET {:<24}".format(str(self._collisions_set)), end=" ")
 
         candidate_list = []
         for i, single_state in enumerate(self._single_agents_states):
@@ -56,9 +54,6 @@ class MStarState(MultiAgentState):
             m.set_back_propagation_set([self])
             m.set_collisions_set(self.colliding_robots(m).copy())
             expanded_states.append(m)
-
-        if verbose:
-            print("DONE! Number of expanded states:", len(expanded_states))
 
         return expanded_states
 
