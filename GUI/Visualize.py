@@ -51,7 +51,10 @@ class Visualize:
             self.infos_txt_var = StringVar()
             self.infos = Label(self.infos_and_buttons_canvas, textvariable=self.infos_txt_var, justify=LEFT,
                                padx=5, pady=2, font=("Lucida Console", 10))
-            self.set_infos_txt()
+            self.infos_txt_var.set("N° OF GENERATED NODES: " +
+                                   str(self._output_infos["generated_nodes"]) + "\nN° OF EXPANDED NODES: " +
+                                   str(self._output_infos["expanded_nodes"]) + "\nCOMPUTATIONAL TIME: " +
+                                   str(round(self._output_infos["computation_time"], 4)))
             self.infos.pack(side=LEFT)
 
         # Quit Button
@@ -101,7 +104,9 @@ class Visualize:
         print("map height ",self._problem_instance.get_map().get_height())
         print("map width ",self._problem_instance.get_map().get_width())
         self.draw_world()
+        self._frame.update()
         self.draw_agents()
+        self._frame.update()
         if not self._paths:
             self.start_button.configure(state=DISABLED)
 
@@ -115,8 +120,7 @@ class Visualize:
     def start_function(self):
         self.start_button.configure(state=DISABLED)
         self.quit_button.configure(state=DISABLED)
-        if self._paths is not None:
-            self.start_animation(self._paths)
+        self.start_animation(self._paths)
 
     def reset_function(self):
         for widget in self._frame.winfo_children():
@@ -129,16 +133,6 @@ class Visualize:
         for widget in self._frame.winfo_children():
             widget.destroy()
         self._frame.quit()
-
-
-    def set_infos_txt(self):
-        """
-        Set the text inside the infos with the output infos.
-        """
-        self.infos_txt_var.set("N° OF GENERATED NODES: " +
-                               str(self._output_infos["generated_nodes"]) + "\nN° OF EXPANDED NODES: " +
-                               str(self._output_infos["expanded_nodes"]) + "\nCOMPUTATIONAL TIME: " +
-                               str(round(self._output_infos["computation_time"], 4)))
 
     def draw_world(self):
         """
@@ -182,15 +176,6 @@ class Visualize:
                                                                     FRAME_MARGIN + self.cell_h * g_row + self.cell_h / 2,
                                                                     font=("Purisa", 12),
                                                                     text="G"))
-
-    def draw_paths(self, paths):
-        """
-        Color the paths.
-        """
-        for i, path in enumerate(paths):
-            color = self.agents_colors[i]
-            for p in path[1:-1]:
-                self.map_canvas.itemconfig(self.vis_cells[p[1]][p[0]], fill=color, stipple="", width=1.5)
 
     def start_animation(self, paths):
         """
@@ -240,7 +225,6 @@ class Visualize:
             self.reset_button.configure(state=NORMAL)
             self.quit_button.configure(state=NORMAL)
 
-
     def get_cell_size(self):
         """
         Return the cell height and width
@@ -251,19 +235,6 @@ class Visualize:
         cell_h = avail_h / n_rows
         cell_w = avail_w / n_cols
         return cell_h, cell_w
-
-    def load_image(self, url, size):
-        """
-        Load an image. It is also stored in the random_images_list otherwise is not visualized on the GUIdd
-        :param url: local path to the image
-        :param size: desired image size
-        :return: the image resized
-        """
-        load = PIL.Image.open(url)
-        load = load.resize(size, PIL.Image.ANTIALIAS)
-        img = PIL.ImageTk.PhotoImage(load)
-        self.random_images_list.append(img)
-        return img
 
     def do_loop(self):
         self._frame.mainloop()

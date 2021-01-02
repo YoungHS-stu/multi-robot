@@ -86,6 +86,7 @@ def plot_on_gui(problem_instance,  frame, paths=None, output_infos=None):
     print("output_infos     ", output_infos)
 
     window = Visualize(problem_instance, frame, paths, output_infos)
+    frame.update()
     window.initialize_window()
 
 
