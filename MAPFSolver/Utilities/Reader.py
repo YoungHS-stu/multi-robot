@@ -7,10 +7,11 @@ import numpy as np
 MAPS_NAMES_LIST = {
     0: "empty-8-8",             # 8.8
     1: "empty-16-16",           # 16.16
-    2: "narrow_corridor",       # 2.9
-    3: "random-32-32-10",       # 32.32
-    4: "room-32-32-4",          # 32.32
-    5: "maze-32-32-2",         # 32.32
+    2: "demo",
+    3: "narrow_corridor",       # 2.9
+    4: "random-32-32-10",       # 32.32
+    5: "room-32-32-4",          # 32.32
+    6: "maze-32-32-2",         # 32.32
 
 
 }
