@@ -5,15 +5,8 @@ from .Agent import Agent
 
 
 class AStar:
-    """
-    This class represents a single-agent A* solver.
-    """
 
     def __init__(self, solver_settings):
-        """
-        Initialize the single-agent A* solver.
-        :param solver_settings: settings used by the solver.
-        """
         self._solver_settings = solver_settings
         self._heuristics = None
         self._frontier = []
@@ -21,15 +14,6 @@ class AStar:
         self._closed_list_of_positions = None  # Keep all the positions already visited
 
     def find_path(self, problem_map, start_pos, goal_pos):
-        """
-        It computes the path from his start position to his goal position using the A* algorithm.
-        It return the path as list of (x, y) positions. If stay at goal is True it will return the goal position once,
-        otherwise it will return the goal position as many times as the value of goal occupation time.
-        :param problem_map: map of the problem.
-        :param start_pos: starting position.
-        :param goal_pos: goal position.
-        :return: path from the start position to the goal position.
-        """
         self.initialize_problem(problem_map, start_pos, goal_pos)
 
         while not len(self._frontier)==0:
@@ -50,18 +34,6 @@ class AStar:
         return []
 
     def find_path_with_reservation_table(self, problem_map, start_pos, goal_pos, reservation_table, completed_pos=None):
-        """
-        It computes the path from his start position to his goal position using the A* algorithm with reservation table.
-        It return the path as list of (x, y) positions. Closed lists are used to accelerate the process.
-        :param problem_map: map of the problem.
-        :param start_pos: starting position of the agent.
-        :param goal_pos: goal position of the agent.
-        :param reservation_table: it's a dictionary that keeps for each position the list of busy time steps.
-        :param completed_pos: is the list of goals of the agents already computed. This in order to remind that the
-        agents already computed will occupy their goal position from the last time step on. This is used only if the
-        option stay at goal is active.
-        :return: the path for the agent, if found any.
-        """
         self.initialize_problem(problem_map, start_pos, goal_pos)
 
         while not len(self._frontier)==0:
@@ -110,16 +82,6 @@ class AStar:
         return []
 
     def find_path_with_constraints(self, problem_map, start_pos, goal_pos, vertex_constraints, edge_constraints=None):
-        """
-        It computes the path from his start position to his goal position using the A* algorithm with reservation table.
-        It return the path as list of (x, y) positions. Closed lists are used to accelerate the process.
-        :param problem_map: map of the problem.
-        :param start_pos: start position of the agent.
-        :param goal_pos: goal position of the agent.
-        :param vertex_constraints: list of vertex constraints.
-        :param edge_constraints: list of edge constraints.
-        :return: solution path.
-        """
         self.initialize_problem(problem_map, start_pos, goal_pos)
         if edge_constraints is None:
             edge_constraints = []
@@ -155,12 +117,6 @@ class AStar:
         return []
 
     def initialize_problem(self, problem_map, start_pos, goal_pos):
-        """
-        Initialize the A* problem. Initialize the frontier and the closed lists.
-        :param problem_map: map of the problem.
-        :param start_pos: start position of the agent.
-        :param goal_pos: goal position of the agent.
-        """
         problem_instance = ProblemInstance(problem_map, [Agent(0, start_pos, goal_pos)])
         self._solver_settings.initialize_heuristic(problem_instance)
 

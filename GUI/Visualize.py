@@ -8,19 +8,8 @@ import copy
 
 
 class Visualize:
-    """
-    This class takes care of the visualization of the simulation of the MAPF solution.
-    """
 
     def __init__(self, problem_instance,  frame, paths, output_infos):
-        """
-        Initialize the frame.
-        :param problem_instance:
-
-        :param frame:
-        :param paths:
-        :param output_infos:
-        """
         self._problem_instance = problem_instance
         self._frame = frame
         self._paths = paths
@@ -96,9 +85,6 @@ class Visualize:
         self.y_moves = [0] * len(self._problem_instance.get_agents())
 
     def initialize_window(self):
-        """
-        Initialize the Window with the World and the agents.
-        """
         print("cell_h ",self.cell_h)
         print("cell_w ",self.cell_w)
         print("map height ",self._problem_instance.get_map().get_height())
@@ -135,9 +121,6 @@ class Visualize:
         self._frame.quit()
 
     def draw_world(self):
-        """
-        Draw the Map World.
-        """
         print("Frame margin ",FRAME_MARGIN)
         n_rows, n_cols = self._problem_instance.get_map().get_height(), self._problem_instance.get_map().get_width()
         for row in range(n_rows):
@@ -150,9 +133,6 @@ class Visualize:
                     self.map_canvas.itemconfig(self.vis_cells[row][col], fill='black', width=2)
 
     def draw_agents(self):
-        """
-        Draw the agents inside the map.
-        """
         for i, a in enumerate(self._problem_instance.get_agents()):
             s_col, s_row = a.get_start()
             g_col, g_row = a.get_goal()
@@ -178,17 +158,10 @@ class Visualize:
                                                                     text="G"))
 
     def start_animation(self, paths):
-        """
-        Start the Path Animation.
-        :param paths: Paths to be displayed.
-        """
         self.path_to_visit = copy.deepcopy(paths)  # In order to copy by value also the nested lists
         self._frame.after(2000, self.animation_function)
 
     def animation_function(self):
-        """
-        Function for the Path Animation.
-        """
         if self.animating:
             self._frame.after(int(self.animation_speed), self.animation_function)
             inc_time_step = True
@@ -226,9 +199,6 @@ class Visualize:
             self.quit_button.configure(state=NORMAL)
 
     def get_cell_size(self):
-        """
-        Return the cell height and width
-        """
         avail_h = self._frame_height - 2 * FRAME_MARGIN
         avail_w = self._frame_width - 2 * FRAME_MARGIN
         n_rows, n_cols = self._problem_instance.get_map().get_height(), self._problem_instance.get_map().get_width()

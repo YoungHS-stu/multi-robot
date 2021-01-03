@@ -3,20 +3,8 @@ import itertools
 
 
 class MStarState(MultiAgentState):
-    """
-    This class represent the single state (node) object for the M* algorithm.
-    The state is like a multi agent state, so it stores all the single agent states (the positions and time step) of each
-    agent, and in addition it keeps a collision set, which contains the agents that has a conflict in that node or in one of
-    his successors, and a back propagation set, which contains the set of state where back propagate the collision set.
-    """
 
     def __init__(self, single_agents_states, solver_settings, parent=None):
-        """
-        Initialize the Multi Agent State. It receives the solver settings and the list of all single agent states.
-        :param single_agents_states: list of SingleAgentState instances.
-        :param solver_settings: settings of the solver.
-        :param parent: Eventual parent State.
-        """
         super().__init__(single_agents_states, solver_settings, parent=parent)
         self._back_propagation_set = []
         self._collisions_set = set()
@@ -24,13 +12,6 @@ class MStarState(MultiAgentState):
         self.compute_heuristics()
 
     def expand(self):
-        """
-        Expand the current state. For each single state, if the corresponding agent is not in the collision set, the
-        next single state will be the one obtained by following the optimal policy, otherwise if it is in the collision
-        set all the possible moves will be considered for that agent.
-        Then these states are iterated in order to obtain all the possible multi agent state combinations.
-        :return: the list of possible next states.
-        """
 
         candidate_list = []
         for i, single_state in enumerate(self._single_agents_states):
@@ -58,11 +39,6 @@ class MStarState(MultiAgentState):
         return expanded_states
 
     def equal_position(self, other):
-        """
-        Return True if the multi agent state and the given multi agent state has the same positions for all the single
-        agent states.
-        :param other: state to compare positions.
-        """
         assert isinstance(other, MStarState)
         for i, single_state in enumerate(self._single_agents_states):
             if not single_state.equal_position(other.get_single_agent_states()[i]):
@@ -70,11 +46,6 @@ class MStarState(MultiAgentState):
         return True
 
     def equal_position_and_time_step(self, other):
-        """
-        Return True if the multi agent state and the given multi agent state has the same positions for all the single
-        agent states.
-        :param other: state to compare positions.
-        """
         assert isinstance(other, MStarState)
         for i, single_state in enumerate(self._single_agents_states):
             if not single_state.equal(other.get_single_agent_states()[i]):
@@ -82,11 +53,6 @@ class MStarState(MultiAgentState):
         return True
 
     def equal(self, other):
-        """
-        Return True if the multi agent state and the given multi agent state has the same positions and the same time
-        steps for all the single agent states.
-        :param other: state to compare position.
-        """
         assert isinstance(other, MStarState)
         if not self._collisions_set == other._collisions_set:
             return False

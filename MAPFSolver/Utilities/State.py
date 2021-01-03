@@ -2,16 +2,9 @@ import abc
 
 
 class State(object):
-    """
-    Abstract class for singleAgent and MultiAgents
-    """
     __metaclass__ = abc.ABCMeta
 
     def __init__(self, parent=None):
-        """
-        Initialize the state. If it is a child node, the parent state must be passed.
-        :param parent:
-        """
         self._g = None
         self._h = None
         if parent is not None:

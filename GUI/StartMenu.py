@@ -3,17 +3,11 @@ from .Visualize import Visualize
 from MAPFSolver import *
 from MAPFSolver.Utilities.SolverSettings import SolverSettings
 from MAPFSolver.Utilities.Reader import Reader, MAPS_NAMES_LIST
-#from GUI.start_simulation import prepare_simulation
 from GUI.macros import *
 from tkinter import *
 from PIL import Image, ImageTk
 
 def load_map(reader):
-    """
-    Return the map object given the number of the chosen map.
-    :param reader: Reader object.
-    :return: a Map object.
-    """
     from MAPFSolver.Utilities.Map import Map
 
     print("Loading map...")
@@ -24,9 +18,6 @@ def load_map(reader):
 
 
 def load_agents(reader, problem_map, n_of_agents):
-    """
-    Return the Agent list for the specified scene number of the given map and the selected number of agents.
-    """
     from MAPFSolver.Utilities.Agent import Agent
 
     print("Loading scenario file...")
@@ -36,9 +27,6 @@ def load_agents(reader, problem_map, n_of_agents):
     return [Agent(i, a[0], a[1]) for i, a in enumerate(agents)]
 
 def get_solver(algorithm_str, solver_settings):
-    """
-    Return the Solver object for the specified algorithm and relative settings.
-    """
     if algorithm_str == "Cooperative A*":
         from MAPFSolver.SearchBasedAlgorithms.CooperativeAStar.CooperativeAStarSolver import CooperativeAStarSolver
         return CooperativeAStarSolver(solver_settings)
@@ -71,14 +59,6 @@ def prepare_simulation(reader, frame, algorithm_str,  solver_settings, n_of_agen
 
 
 def plot_on_gui(problem_instance,  frame, paths=None, output_infos=None):
-    """
-    Plot the result on GUIdd.
-    :param problem_instance: instance of the problem.
-    :param solver_settings: settings of the solver.
-    :param frame: tkinter frame where display the result.
-    :param paths: resulting paths.
-    :param output_infos: problem solving results.
-    """
     print("In plot_on_gui   ")
     print("problem_instance ", problem_instance)
     print("frame            ", frame)
@@ -92,15 +72,8 @@ def plot_on_gui(problem_instance,  frame, paths=None, output_infos=None):
 
 
 class StartMenu:
-    """
-    This class represent the GUIdd start menu. On the GUIdd you can select the desired settings in order to visualize the
-    MAPF simulation.
-    """
 
     def __init__(self):
-        """
-        Initialize the start menu of the GUIdd
-        """
         self.font_titles = ("Helvetica", 13)
         self.pady_titles = 5
         self.color_titles = "purple"
@@ -174,9 +147,6 @@ class StartMenu:
         self.frame.focus_set()
 
     def initialize_variables(self):
-        """
-        Initialize the widgets values.
-        """
         self.selected_algorithm_var.set("Cooperative A*")
         self.independence_detection_var.set(False)
         self.selected_map_var.set(0)
@@ -191,10 +161,6 @@ class StartMenu:
         self.waiting_var.set("")
 
     def choose_map_frame_initialization(self):
-        """
-        Initialize the Choose Map Frame, which containing the list of all the possible selectable maps as Radiobuttons
-        and with a scrollbar for a better visualization.
-        """
         # Set up Scrollbar
         scrollbar = Scrollbar(self.choose_map_frame, command=self.choose_map_canvas.yview)
         scrollbar.pack(side=RIGHT, fill='y')
@@ -232,10 +198,6 @@ class StartMenu:
         self.choose_map_canvas.configure(scrollregion=self.choose_map_canvas.bbox('all'))
 
     def algorithm_settings_frame_initialization(self):
-        """
-        Initialize the Algorithm Settings Frame, which containing the selection of the algorithm, the independence
-        detection options, the heuristics, the permanence time and the number of agents
-        """
         # Algorithm Label
         lbl_title = Label(self.algorithm_settings_frame, text="ALGORITHM", font=self.font_titles, fg=self.color_titles)
         lbl_title.pack(anchor=W, ipady=self.pady_titles)
@@ -247,12 +209,6 @@ class StartMenu:
                             borderwidth=0, value=mode)
             self.buttons_list.append(b)
             b.pack(anchor=W)
-
-        # Independence Detection Checkbutton
-        # id_button = Checkbutton(self.algorithm_settings_frame, text="Independence Detection",
-        #                         variable=self.independence_detection_var, onvalue=True, offvalue=False)
-        # self.buttons_list.append(id_button)
-        # id_button.pack(anchor=W, pady=(self.pady_titles, 0))
 
         # Heuristics Label
         lbl_title = Label(self.algorithm_settings_frame, text="HEURISTICS", font=self.font_titles, fg=self.color_titles)
@@ -319,9 +275,6 @@ class StartMenu:
         print(self.time_out_var.get())
 
     def initialize_scene_selection_canvas(self, canvas):
-        """
-        Initialize the Scene Selection Canvas
-        """
         # Load button images
         root_path = pathlib.Path(__file__).parent
 
@@ -345,9 +298,6 @@ class StartMenu:
         self.buttons_list.append(scene_file_number_up_button)
 
     def initialize_n_of_agents_canvas(self, canvas):
-        """
-        Initialize the Number of Agents Canvas
-        """
         # Load button images
         root_path = pathlib.Path(__file__).parent
 
@@ -371,9 +321,6 @@ class StartMenu:
 
 
     def initialize_time_out_canvas(self, canvas):
-        """
-        Initialize the time out Canvas
-        """
         # Time out entry
         time_out_entry = Entry(canvas, textvariable=self.time_out_var, width=4, highlightthickness=0)
         self.buttons_list.append(time_out_entry)
@@ -384,9 +331,6 @@ class StartMenu:
         seconds_lbl.pack(side=LEFT, padx=0)
 
     def prepare_simulation_function(self):
-        """
-        Launch the simulation and display it on the Simulation Frame.
-        """
         # Waiting label
         waiting_lbl = Label(self.simulation_frame, text="Wait for the solution to be computed...")
         waiting_lbl.place(relx=.5, rely=.5, anchor="center")
@@ -439,12 +383,6 @@ class StartMenu:
             button.configure(state=DISABLED)
 
     def load_image(self, url, size):
-        """
-        Load an image. It is also stored in the random_images_list otherwise is not visualized on the GUIdd
-        :param url: local path to the image
-        :param size: desired image size
-        :return: the image resized
-        """
         load = Image.open(url)
         load = load.resize(size, Image.ANTIALIAS)
         img = ImageTk.PhotoImage(load)

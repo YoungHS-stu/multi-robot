@@ -5,15 +5,8 @@ import time
 
 
 class CooperativeAStarSolver(AbstractSolver):
-    """
-    Cooperative A* solver.
-    """
 
     def __init__(self, solver_settings):
-        """
-        Initialize the Cooperative A* solver.
-        :param solver_settings: settings used by the Cooperative A* solver.
-        """
         super().__init__(solver_settings)
         self._reservation_table = None
         self._completed_pos = None
@@ -21,13 +14,6 @@ class CooperativeAStarSolver(AbstractSolver):
         self._stop_event = None
 
     def solve(self, problem_instance, return_infos=False):
-        """
-        Solve the given MAPF problem with the Cooperative A* algorithm and it returns, if exists, a solution.
-        :param problem_instance: instance of the problem to solve.
-        :param return_infos: if True in addition to the paths will be returned also a structure with output infos.
-        :return the solution as list of paths, and, if return_infos is True, a tuple composed by the solution and a
-        struct with output information.
-        """
         self._stop_event = Event()
         start = time.time()
 
@@ -41,10 +27,6 @@ class CooperativeAStarSolver(AbstractSolver):
         return self._solution if not return_infos else (self._solution, output_infos)
 
     def solve_problem(self, problem_instance):
-        """
-        Solve the given MAPF problem using the Cooperative A* algorithm.
-        :param problem_instance: instance of the problem to solve.
-        """
         self._reservation_table = dict()
         self._completed_pos = []
 

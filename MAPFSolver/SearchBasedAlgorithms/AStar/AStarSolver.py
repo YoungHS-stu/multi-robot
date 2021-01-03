@@ -7,15 +7,8 @@ import time
 
 
 class AStarSolver(AbstractSolver):
-    """
-    Classical A* multi-agent algorithm. It is complete and optimal.
-    """
 
     def __init__(self, solver_settings):
-        """
-        Initialize the A* solver.
-        :param solver_settings: settings used by the A* solver.
-        """
         super().__init__(solver_settings)
         self._frontier = []
         self._visited_list = None
@@ -26,13 +19,6 @@ class AStarSolver(AbstractSolver):
         self._stop_event = None
 
     def solve(self, problem_instance, return_infos=False):
-        """
-        Solve the given MAPF problem using the A* algorithm and it returns, if exists, a solution.
-        :param problem_instance: instance of the problem to solve.
-        :param return_infos: if True in addition to the paths will be returned also a structure with output infos.
-        :return the solution as list of paths, and, if return_infos is True, a tuple composed by the solution and a
-        struct with output information.
-        """
         self._stop_event = Event()
         start = time.time()
 
@@ -53,10 +39,6 @@ class AStarSolver(AbstractSolver):
         return self._solution if not return_infos else (self._solution, output_infos)
 
     def solve_problem(self, problem_instance):
-        """
-        Solve the MAPF problem using the A* algorithm.
-        :param problem_instance: problem instance to solve
-        """
         self.initialize_problem(problem_instance)
         print("\n\n in AstarSolver, solver setting:\n",self._solver_settings)
         '''_frontier is a queue, here we start BFS'''
@@ -84,11 +66,6 @@ class AStarSolver(AbstractSolver):
        
 
     def initialize_problem(self, problem_instance):
-        """
-        Initialize the frontier and the heuristic for the given problem.
-
-        preparing relevant data structure
-        """
         self._solver_settings.initialize_heuristic(problem_instance)
         self._frontier = []
         self._visited_list = StatesQueue()

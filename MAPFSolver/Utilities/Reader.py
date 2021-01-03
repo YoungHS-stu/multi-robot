@@ -17,18 +17,8 @@ MAPS_NAMES_LIST = {
 
 
 class Reader:
-    """
-    This class takes care of the loading of map and agents from the corresponding map files and scenario files.
-    In order to load a certain file the methods set_map() and set_scenario_file_number() must be
-    called before calling the corresponding load_map_file() or load_scenario_file().
-    """
 
     def __init__(self, map_number=0, scenario_file_number=1):
-        """
-        Initialize a reader object.
-        :param map_number: map number to load.
-        :param scenario_file_number: scenario file number to load.
-        """
         self._map_number = map_number
         self._scenario_file_number = scenario_file_number
 
@@ -38,12 +28,6 @@ class Reader:
         self._scenario_instances = None
 
     def load_map_file(self, occupied_char='@', valid_chars={'@', '.', 'T'}):
-        """
-        Load the map infos from a .map file.
-        :param occupied_char: Char representing an occupied cell.
-        :param valid_chars: chars valid in the map file.
-        :return: width of the map, height of the map and the list of the obstacles in the map.
-        """
         assert(self._map_number is not None), "Map Number Not Set"
 
         root_path = pathlib.Path(__file__).parent.parent.parent
@@ -70,22 +54,6 @@ class Reader:
         return width, height, occupancy_lst
 
     def load_scenario_file(self, occupancy_lst, map_width, map_height, n_of_agents=10):
-        """
-        Load a set of agents from scenario file. This method keep into account those class variables:
-        - self._map_number: in order to find the corresponding scenario file.
-        - self._scenario_file_number: number of the scenario file to pick.
-        - self._reload_instances: this is False if I want to use the already loaded instances. If I've changed map or
-                                  scenario this will be True since the instances need to be reloaded. This variable is
-                                  useful in order to keep into memory the last instances that could have been loaded
-                                  randomly.
-        - self._change_scenario_instances: is True if I want to select another bucket of agents from the scenario file
-                                           (if Even) or another random bucket from the scenario file(if Random).
-        :param occupancy_lst: list of the obstacles.
-        :param map_width: width of the map.
-        :param map_height: height of the map.
-        :param n_of_agents: number of agents to return.
-        :return: array of start and destination couples. (Agents starts and goals)
-        """
         scenario_file_path = get_scenario_file_path(self._map_number,  self._scenario_file_number)
 
         if self._reload_instances:
@@ -104,12 +72,6 @@ class Reader:
 
 
     def load_instances(self, scenario_file_path, map_width, map_height):
-        """
-        Load the instances from the scenario file.
-        :param scenario_file_path: path of the scenario file to load.
-        :param map_width: width of the map.
-        :param map_height: height of the map.
-        """
         if not os.path.isfile(scenario_file_path):
             print(scenario_file_path)
             print("Scenario file not found!")
@@ -128,30 +90,17 @@ class Reader:
             assert (i[3] == map_height)
 
     def set_map(self, map_number):
-        """
-        Set the map number to load.
-        :param map_number: map number to set.
-        """
         self._map_number = map_number
         self._reload_instances = True
 
 
 
     def set_scenario_file_number(self, scenario_file_number):
-        """
-        Set the scenario file number to load.
-        :param scenario_file_number: scenario file number to set.
-        """
         self._scenario_file_number = scenario_file_number
         self._reload_instances = True
 
 
 def convert_nums(lst):
-    """
-    Convert list of strings into nums.
-    :param lst: string to convert.
-    :return: list of int or float.
-    """
     for i in range(len(lst)):
         try:
             lst[i] = int(lst[i])
@@ -164,12 +113,6 @@ def convert_nums(lst):
 
 
 def get_scenario_file_path(map_number, scenario_number):
-    """
-    Given the number of the map, the type and the number of the scenario, it returns the path of the .scen file.
-    :param map_number: number of the chosen map.
-    :param scenario_number: number if the chosen scenario.
-    :return: path of the scenario file.
-    """
     map_name = MAPS_NAMES_LIST.get(map_number)
     root_path = pathlib.Path(__file__).parent.parent.parent
     scenario_file_path = str(root_path / "Maps/scenarios") + "/" + map_name + "-" + str(

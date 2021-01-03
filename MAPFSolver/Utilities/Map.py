@@ -1,22 +1,10 @@
 class Map:
     def __init__(self, h, w, obstacles):
-        """
-        Initialize a map with his dimensions and the list of the obstacles.
-        :param h: height of the map.
-        :param w: width of the map.
-        :param obstacles: list of obstacles in (x,y) coordinates.
-        """
         self._h = h
         self._w = w
         self._obstacles_xy = obstacles
 
     def neighbours(self, xy):
-        """
-        Returns the positions of the neighbours in (x, y) Coordinates. It considers as neighbours only the horizontal
-        and vertical neighbours, not the traversals ones, so it'll move left, right, up and down.
-        :param xy: is a tuple (x, y) representing a position on the map.
-        :return: a list of (x, y) positions.
-        """
         x, y = xy
         neighbours = []
         if x > 0 and not (x-1, y) in self._obstacles_xy:

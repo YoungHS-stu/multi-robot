@@ -1,13 +1,6 @@
 from MAPFSolver.Utilities.AStar import AStar
 
 def calculate_soc(paths):
-    """
-    Given the list of paths it return the sum of cost value. Time spent in goal is not considered.
-    :param paths: list of paths.
-    :param goal_occupation_time: time that the agent will spent in the goal before disappear. Have sense only if stay in
-    goal is false.
-    :return: sum of costs value.
-    """
     if not paths:
         return None
 
@@ -19,14 +12,6 @@ def calculate_soc(paths):
 
 
 def calculate_makespan(paths):
-    """
-    Given the list of paths it return the makespan value. Time spent in goal is not considered.
-    :param paths: list of paths.
-
-    :param goal_occupation_time: time that the agent will spent in the goal before disappear. Have sense only if stay in
-    goal is false.
-    :return: makespan value.
-    """
     if not paths:
         return None
 
@@ -34,12 +19,6 @@ def calculate_makespan(paths):
     return makespan
 
 def normalize_paths_lengths(paths):
-    """
-    It receives a list of paths of different lengths. It normalize all this lengths by adding goal state to all the
-    short paths.
-    :param paths: paths to update.
-    :return: return the updated paths.
-    """
     import copy
     max_length = max([len(path) for path in paths])
     new_paths = copy.deepcopy(paths)
@@ -51,14 +30,6 @@ def normalize_paths_lengths(paths):
     return new_paths
 
 def check_conflicts_with_type(paths):
-    """
-    Returns a couple (type of constraint, new children constraints) or None if the state has no conflicts.
-    It is used for the CBS algorithm.
-    - In case a vertex conflict is found it will returns the two child conflicts:
-    Example: (ai, aj, v, t) -> as [(ai, v, t), (aj, v, t)]
-    - In case an edge conflict is found it will returns the two child conflicts:
-    Example: [(ai, pos_i, pos_f, ts_f), (aj, pos_i, pos_f, ts_f)]
-    """
     reservation_table = dict()
     paths = normalize_paths_lengths(paths)
 
@@ -79,26 +50,9 @@ def check_conflicts_with_type(paths):
     return None
 
 class ConstraintTreeNode:
-    """
-    This class represents a single node of the constraint tree.
-    """
 
     def __init__(self, problem_instance, solver_settings, parent=None, vertex_constraints=None, edge_constraints=None,
                  agent_to_recompute=None):
-        """
-        Initialize the node.
-        :param problem_instance: instance of the problem.
-        :param solver_settings: settings of the solver.
-        :param parent: parent node.
-        :param vertex_constraints: list of vertex constraints. They represents the constraints resulting from vertex
-        conflicts. Their form is the following: (agent_id, position, time_step)
-        :param edge_constraints: list of edge constraints. They represents the constraints resulting from edge
-        conflicts. Their form is the following: (agent_id, initial_position, final_position, final_time_step)
-        :param agent_to_recompute: is used to speed up the process and avoid to recompute each time the path for each
-        agent. if it's not the root and this node change from his predecessor only for a constraint, this represent the
-        agent involved in that constraint. In this way we avoid to recompute all the other paths, but we recompute only
-        the path of the agent involved.
-        """
         self._problem_instance = problem_instance
         self._solver_settings = solver_settings
         self._parent = parent
@@ -120,10 +74,6 @@ class ConstraintTreeNode:
         self.conflict = None
 
     def low_level_search(self):
-        """
-        Low level search. For every agent it searches a possible valid path using A* which doesn't violate the set of
-        constraints.
-        """
         solution = []
         for agent in self._problem_instance.get_agents():
             path = self.single_agent_low_level_search(agent)
@@ -134,10 +84,6 @@ class ConstraintTreeNode:
         return solution
 
     def single_agent_low_level_search(self, agent):
-        """
-        Low level search for a single agent. It searches a possible valid path using A* which doesn't violate the set
-        of constraints.
-        """
         agent_vertex_constraints = []
         for vertex_constraint in self._vertex_constraints:
             agent_id, pos, ts = vertex_constraint
@@ -157,11 +103,6 @@ class ConstraintTreeNode:
         return path
 
     def expand(self):
-        """
-        Expand the current state. It generates the two child nodes, once with the conflict constraint added to the first
-        agent and the other with the conflict constraint added to the second agent involved in the conflict.
-        :return: the two possible next states.
-        """
         if self._solution is None:
             # it means that in that state at least a path it's impossible
             # and so it's useless create new states children of that since they will all have
@@ -221,27 +162,15 @@ class ConstraintTreeNode:
             return calculate_makespan(self._solution)
 
     def total_cost(self):
-        """
-        Return the cost of the node.
-        """
         return self._total_cost
 
     def vertex_constraints(self):
-        """
-        Return the list of vertex constraints of the node.
-        """
         return self._vertex_constraints
 
     def edge_constraints(self):
-        """
-        Return the list of the edge constraints of the node.
-        """
         return self._edge_constraints
 
     def is_valid(self):
-        """
-        Returns True if the solution of the node is valid i.e.the set of paths for all agents have no conflicts
-        """
         if self._solution is None:
             return False
 

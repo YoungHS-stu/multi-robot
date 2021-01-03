@@ -8,26 +8,8 @@ import time
 
 
 class MStarSolver(AbstractSolver):
-    """
-    M* algorithm, a complete and optimal implementation of sub-dimensional expansion which uses A* as the
-    underlying planner. The basic idea of the algorithm is the following:
-    1. Find optimal path for each agent individually;
-    2. Start the search. Generate only nodes on optimal paths;
-    3. If conflict occurs – backtrack and consider all ignored actions;
-
-    Implementation idea:
-    The primary difference whit A* is that M* restricts the set of possible successors of a vertex based on the collision
-    set. Here each node has his collision set which contains the agents that has a conflict in that node or in one of his
-    successors.
-    Only robots in the collision set are allowed to consider any possible action. All other robots must obey their
-    individual policies
-    """
 
     def __init__(self, solver_settings):
-        """
-        Initialize the A* solver.
-        :param solver_settings: settings used by the A* solver.
-        """
         super().__init__(solver_settings)
         self._frontier = None
         self._closed_list = None
@@ -38,13 +20,6 @@ class MStarSolver(AbstractSolver):
         self._stop_event = None
 
     def solve(self, problem_instance, return_infos=False):
-        """
-        Solve the given MAPF problem using the M* algorithm  and it returns, if exists, a solution.
-        :param problem_instance: instance of the problem to solve.
-        :param return_infos: if True in addition to the paths will be returned also a structure with output infos.
-        :return the solution as list of paths, and, if return_infos is True, a tuple composed by the solution and a
-        struct with output information.
-        """
         self._stop_event = Event()
         start = time.time()
 
@@ -59,13 +34,6 @@ class MStarSolver(AbstractSolver):
         return self._solution if not return_infos else (self._solution, output_infos)
 
     def solve_problem(self, problem_instance):
-        """
-        Solve the MAPF problem using the M* algorithm.
-        It start following the optimal policy and each time a conflict occur it updates the collision set and back
-        propagate it to the ancestors. So, when the collision set is not empty it will considers for those agents all
-        the possible moves.
-        :param problem_instance: problem instance to solve
-        """
         self.initialize_problem(problem_instance)
 
         while not self._frontier.is_empty():
@@ -94,12 +62,6 @@ class MStarSolver(AbstractSolver):
                     self._frontier.add(n)
 
     def back_propagate(self, vk, vl):
-        """
-        Takes the parent node vk and the expanded node vl and back propagate the collision set of the expanded node vl
-        to his ancestors recursively.
-        :param vk: previous state
-        :param vl: expanded state
-        """
         ck = vk.get_collisions_set().copy()
         cl = vl.get_collisions_set().copy()
 
@@ -113,9 +75,6 @@ class MStarSolver(AbstractSolver):
                 self.back_propagate(vm, vk)
 
     def initialize_problem(self, problem_instance):
-        """
-        Initialize the frontier and the heuristic for the given problem.
-        """
         self._solver_settings.initialize_heuristic(problem_instance)
         self._frontier = StatesQueue()
         self._closed_list = MStarStatesQueue()
